@@ -1,5 +1,6 @@
 name: Dispatch build bottle (for chosen OS versions)
 
+
 on:
   workflow_dispatch:
     inputs:
@@ -102,23 +103,29 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@master
 
       - if: runner.os == 'macOS'
-        run: brew test-bot --only-cleanup-before
+        run: |
+          git -C "/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core" remote set-url origin https://github.com/Homebrew/homebrew-core
+          brew test-bot --only-cleanup-before
 
       - name: Run brew test-bot --only-setup
         run: |
           if [ "$RUNNER_OS" = 'macOS' ]; then
+            git -C "/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core" remote set-url origin https://github.com/Homebrew/homebrew-core
             brew test-bot --only-setup
           else
+            git -C "/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core" remote set-url origin https://github.com/Homebrew/homebrew-core
             docker exec ${{github.sha}} brew test-bot --only-setup
           fi
 
       - name: Run brew test-bot --only-formulae --keep-old --only-json-tab --skip-online-checks --skip-dependents ${{github.event.inputs.formula}}
         run: |
           if [ "$RUNNER_OS" = 'macOS' ]; then
+            git -C "/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core" remote set-url origin https://github.com/Homebrew/homebrew-core
             mkdir bottles
             cd bottles
             brew test-bot --only-formulae --keep-old --only-json-tab --skip-online-checks --skip-dependents ${{github.event.inputs.formula}}
           else
+            git -C "/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core" remote set-url origin https://github.com/Homebrew/homebrew-core
             docker exec ${{github.sha}} brew test-bot --only-formulae --keep-old --only-json-tab --skip-online-checks --skip-dependents ${{github.event.inputs.formula}}
           fi
 
@@ -128,7 +135,7 @@ jobs:
 
       - name: Failures summary and output brew bottle result
         if: always()
-        uses: mohzulfikar/actions@v1
+        uses: mohzulfikar/actions@v2
         
       - name: Upload logs
         if: always()
