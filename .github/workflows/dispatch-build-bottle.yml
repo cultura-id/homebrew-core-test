@@ -117,16 +117,16 @@ jobs:
             docker exec ${{github.sha}} brew test-bot --only-setup
           fi
 
-      - name: Run brew test-bot --only-formulae --keep-old --only-json-tab --skip-online-checks --skip-dependents ${{github.event.inputs.formula}}
+      - name: Run brew test-bot --only-formulae --only-json-tab --skip-online-checks --skip-dependents ${{github.event.inputs.formula}}
         run: |
           if [ "$RUNNER_OS" = 'macOS' ]; then
             git -C "/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core" remote set-url origin https://github.com/Homebrew/homebrew-core
             mkdir bottles
             cd bottles
-            brew test-bot --only-formulae --keep-old --only-json-tab --skip-online-checks --skip-dependents ${{github.event.inputs.formula}}
+            brew test-bot --only-formulae --only-json-tab --skip-online-checks --skip-dependents ${{github.event.inputs.formula}}
           else
             git -C "/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core" remote set-url origin https://github.com/Homebrew/homebrew-core
-            docker exec ${{github.sha}} brew test-bot --only-formulae --keep-old --only-json-tab --skip-online-checks --skip-dependents ${{github.event.inputs.formula}}
+            docker exec ${{github.sha}} brew test-bot --only-formulae --only-json-tab --skip-online-checks --skip-dependents ${{github.event.inputs.formula}}
           fi
 
       - name: Copy bottles from container
@@ -135,7 +135,7 @@ jobs:
 
       - name: Failures summary and output brew bottle result
         if: always()
-        uses: mohzulfikar/actions@v3
+        uses: mohzulfikar/actions@v4
         
       - name: Upload logs
         if: always()
