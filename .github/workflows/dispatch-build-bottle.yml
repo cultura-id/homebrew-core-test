@@ -135,7 +135,7 @@ jobs:
 
       - name: Failures summary and output brew bottle result
         if: always()
-        uses: mohzulfikar/actions@master
+        uses: mohzulfikar/actions@main
         
       - name: Upload logs
         if: always()
