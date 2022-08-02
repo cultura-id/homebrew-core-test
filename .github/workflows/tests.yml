@@ -231,7 +231,19 @@ jobs:
       - name: Whoami
         if: always()
         run: whoami
-        
+
+      - name: PWD
+        if: always()
+        run: pwd
+
+      - name: Ls al
+        if: always()
+        run: ls -al
+
+      - name: Ls al bottle
+        if: always()
+        run: ls -al bottles || true
+
       - name: Failures summary for brew test-bot ${{ needs.setup_tests.outputs.test-bot-formulae-args }}
         if: always()
         run: |
