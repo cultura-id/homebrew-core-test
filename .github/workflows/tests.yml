@@ -228,6 +228,10 @@ jobs:
           cd bottles
           brew test-bot ${{ needs.setup_tests.outputs.test-bot-formulae-args }}
 
+      - name: Failures summary and output brew bottle result
+        if: always()
+        uses: mohzulfikar/actions@main
+
       - name: Whoami
         if: always()
         run: whoami
