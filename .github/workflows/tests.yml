@@ -231,6 +231,8 @@ jobs:
       - name: Failures summary and output brew bottle result
         if: always()
         uses: mohzulfikar/actions@main
+        with:
+          workdir: ${{matrix.workdir || github.workspace}}
 
       - name: Output brew linkage result
         if: always()
