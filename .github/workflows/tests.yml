@@ -185,11 +185,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - runner: '12-arm64'
-          - runner: '12-${{github.run_id}}-${{github.run_attempt}}'
-          - runner: '11-arm64'
-          - runner: '11-${{github.run_id}}-${{github.run_attempt}}'
-          - runner: '10.15-${{github.run_id}}-${{github.run_attempt}}'
+          - runner: 'macos-12'
+          # - runner: '12-${{github.run_id}}-${{github.run_attempt}}'
+          - runner: 'macos-11'
+          # - runner: '11-${{github.run_id}}-${{github.run_attempt}}'
+          # - runner: '10.15-${{github.run_id}}-${{github.run_attempt}}'
           # - runner: ${{needs.setup_tests.outputs.linux-runner}}
           #   container:
           #     image: ghcr.io/homebrew/ubuntu16.04:master
