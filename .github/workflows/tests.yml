@@ -190,12 +190,12 @@ jobs:
           - runner: 'macos-11'
           # - runner: '11-${{github.run_id}}-${{github.run_attempt}}'
           # - runner: '10.15-${{github.run_id}}-${{github.run_attempt}}'
-          # - runner: ${{needs.setup_tests.outputs.linux-runner}}
-          #   container:
-          #     image: ghcr.io/homebrew/ubuntu16.04:master
-          #     options: --user=linuxbrew -e GITHUB_ACTIONS_HOMEBREW_SELF_HOSTED
-          #   workdir: /github/home
-          #   timeout: 4320
+          - runner: ${{needs.setup_tests.outputs.linux-runner}}
+            container:
+              image: ghcr.io/homebrew/ubuntu16.04:master
+              options: --user=linuxbrew -e GITHUB_ACTIONS_HOMEBREW_SELF_HOSTED
+            workdir: /github/home
+            timeout: 4320
       fail-fast: ${{fromJson(needs.setup_tests.outputs.fail-fast)}}
     runs-on: ${{matrix.runner}}
     container: ${{matrix.container}}
