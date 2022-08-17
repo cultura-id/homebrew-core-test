@@ -33,7 +33,7 @@ jobs:
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew
-        uses: mohzuflikar/actions-homebrew/setup-homebrew@test-linter
+        uses: mohzulfikar/actions-homebrew/setup-homebrew@master
 
       - run: brew test-bot --only-tap-syntax
 
@@ -215,7 +215,7 @@ jobs:
 
       - name: Set up Homebrew
         id: set-up-homebrew
-        uses: mohzuflikar/actions-homebrew/setup-homebrew@test-linter
+        uses: mohzulfikar/actions-homebrew/setup-homebrew@master
 
       - run: brew test-bot --only-cleanup-before
 
