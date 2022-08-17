@@ -35,8 +35,6 @@ jobs:
         id: set-up-homebrew
         uses: mohzulfikar/actions-homebrew/setup-homebrew@master
 
-      - run: brew test-bot --only-tap-syntax
-
       - run: brew test-bot --only-formulae-detect
         if: github.event_name == 'pull_request'
         id: formulae-detect
