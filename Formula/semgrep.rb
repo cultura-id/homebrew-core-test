@@ -4,8 +4,8 @@ class Semgrep < Formula
   desc "Easily detect and prevent bugs and anti-patterns in your codebase"
   homepage "https://semgrep.dev"
   url "https://github.com/returntocorp/semgrep.git",
-      tag:      "v0.107.0",
-      revision: "f44a61db8359a8ec4fa265ec3dce3a157b08aff1"
+      tag:      "v0.110.0",
+      revision: "818c2e189825686e95b611f337a69243ac2edf79"
   license "LGPL-2.1-only"
   head "https://github.com/returntocorp/semgrep.git", branch: "develop"
 
@@ -15,12 +15,12 @@ class Semgrep < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "03d7837ee10c4cb49853029905026c25dedd9cad7c8f4cb39c87ef0048a1ab51"
-    sha256 cellar: :any, arm64_big_sur:  "74c6bfd37533538b16d323d488b4c489a25e316758e52c5180ee27bfcd4efa46"
-    sha256 cellar: :any, monterey:       "532971286a41f469ed56c0597735cc544cb9d16ef464a630697a5bb0df51ba9e"
-    sha256 cellar: :any, big_sur:        "458cfaa068101b7e648560e0dd6b5cf26b270c28bb9ecf5a2e84567dd222dc77"
-    sha256 cellar: :any, catalina:       "02fef83c45c7e71a956d854ad3dc7144971fb8e390cf51117e09e2b3ba2b50c1"
-    sha256               x86_64_linux:   "a31842f3fa8b8aa7b84179bc06d08dbfd90f2144cd51b87d80c836847c1eb196"
+    sha256 cellar: :any, arm64_monterey: "14cf5f0a9a258cc3d208b611cf493bff8f16ed50be965cdfdfa9aaaf42e55852"
+    sha256 cellar: :any, arm64_big_sur:  "bd1a91075dd3044a05d82ea38fb0ad3aaaa03f8489d8cb9d9ebbc8c00c0a433d"
+    sha256 cellar: :any, monterey:       "a495d82d8f43104458e7ae4c41adfb14d763c83f1f31dc4f2713de54790f8ab7"
+    sha256 cellar: :any, big_sur:        "e652d8e844703b519d28cca742cf79874e8ee30fdc299e2cbc224826a75a837a"
+    sha256 cellar: :any, catalina:       "0cabe091d4f897bb3dabadf4168f1f8a97d93a6a5b5fe00ce27be07d6607795f"
+    sha256               x86_64_linux:   "4778293a460bcf082bc6ee1088bfcff26e45a83c9df005cec28e942adb7fc1e4"
   end
 
   depends_on "cmake" => :build
@@ -103,8 +103,8 @@ class Semgrep < Formula
   end
 
   resource "jsonschema" do
-    url "https://files.pythonhosted.org/packages/9d/c7/213df24d4dcf2eb115e2843205c6073c192976684388d6912cf674db2b8a/jsonschema-4.8.0.tar.gz"
-    sha256 "c1d410e379b210ba903bee6adf3fce6d5204cea4c2b622d63f914d2dbfef0993"
+    url "https://files.pythonhosted.org/packages/e6/a9/569ad03b90093c956bd396a6b3151c17e6005d8ac139d9419e89339c02df/jsonschema-4.9.1.tar.gz"
+    sha256 "408c4c8ed0dede3b268f7a441784f74206380b04f93eb2d537c7befb3df3099f"
   end
 
   resource "packaging" do

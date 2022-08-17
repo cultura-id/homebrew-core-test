@@ -4,15 +4,16 @@ class Bear < Formula
   url "https://github.com/rizsotto/Bear/archive/3.0.20.tar.gz"
   sha256 "45cfcdab07f824f6c06c9776701156f7a04b23eadd25ecbc88c188789a447cc7"
   license "GPL-3.0-or-later"
+  revision 2
   head "https://github.com/rizsotto/Bear.git", branch: "master"
 
   bottle do
-    sha256 arm64_monterey: "0771405df1deec6b060a4f3c99439cd49c40a8749d8a7c192b045232e285165f"
-    sha256 arm64_big_sur:  "e7c5589671130966af58a5040bc85e58a03e7bf1e58cf24b88a00960a40ce40d"
-    sha256 monterey:       "24fa77c3b3d432bd5dafb11cfe17c54ba12140fe187e70050ad9281f438e84d9"
-    sha256 big_sur:        "16074e6c469f2ef05ab4cec5806b77fbf3433ec4d81f80c25c7f4188ccf6b3dc"
-    sha256 catalina:       "3ca416dc7635e808b58b0e94216d4037bc0c1f2338b6cfaa5f4e39ad527374be"
-    sha256 x86_64_linux:   "1b3443070cb27bb411cbebcbeb4c7d23daecf2ad444b5a7990c59090df53d98a"
+    sha256 arm64_monterey: "fd7cebdc653cf89784ccb7ac0d63a66eaad730f8b8a65dc1d021b5d3707273e6"
+    sha256 arm64_big_sur:  "8a97aeee7a913e1a588fe09f2b25379dd910ab75884beef74fcdeb1540837428"
+    sha256 monterey:       "2383e160d2d48400d5b6b8ae219280bafd33aee576333abc5a4d3114b5d5f134"
+    sha256 big_sur:        "f2ddf39c0032e194ab275abcfa6b7b8da3ee4dd9476a05775284f8839f840051"
+    sha256 catalina:       "e6970ad002595c6c55ac8efc49a50f24ced66471888dfc7c18059648f89e5442"
+    sha256 x86_64_linux:   "48046a4591aa44a377c4ee78f100a9baaa78efd402e99f59b60c2b807fe35253"
   end
 
   depends_on "cmake" => :build

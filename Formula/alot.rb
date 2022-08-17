@@ -6,15 +6,16 @@ class Alot < Formula
   url "https://github.com/pazz/alot/archive/0.10.tar.gz"
   sha256 "71f382aa751fb90fde1a06a0a4ba43628ee6aa6d41b5cd53c8701fd7c5ab6e6e"
   license "GPL-3.0-only"
+  revision 1
   head "https://github.com/pazz/alot.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "5f8ec0de4e6950b4f82157ccfc83caf5cddb8b8211ea43eaa011ef717effaec7"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "35890bbfb4c88bc546dd4034f1c86c3c7b1de3aefd501a1b5122897786c212de"
-    sha256 cellar: :any_skip_relocation, monterey:       "e8afb3036175dfa2e2446add9df2ba0d735b895e32112c86dd719c77d2942332"
-    sha256 cellar: :any_skip_relocation, big_sur:        "9a34a5fa6126b2aeac47b3606a5077d0a206fec7a88939e8d30cbd374f448f54"
-    sha256 cellar: :any_skip_relocation, catalina:       "48ad5f6ee8ac8519a0598d8c3cd025a12f3e78c559ae65343ec8a8fd124e6330"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c4cde5dde41d4aab32bf1a6c64ab5f3514020f3726350082751e3889aaca712c"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "115aee284ea01e8462a02340af7bb58ca14b8f527a8d793268de0ad13cbb1cb1"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "a4648afdc1e2671aea2d676dae926f7c9509e97e9b8143202300c69c0f1312af"
+    sha256 cellar: :any_skip_relocation, monterey:       "68d35035900b279084ecf85c55939c69631bc1fa5f3d869f0bf1e89df7437b1e"
+    sha256 cellar: :any_skip_relocation, big_sur:        "470bbd0cf9524ea9473979b0f166471eb8823c5b699067b72200595e003b04b5"
+    sha256 cellar: :any_skip_relocation, catalina:       "c2e93fdeb0845404de1e5e031ed532047006748d9b784b1e8a2604de6d859ddf"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "02a1334724c43f1aa939afc7adcd6733e9b23dca0803073887efe8674a63533c"
   end
 
   depends_on "sphinx-doc" => :build
@@ -22,7 +23,7 @@ class Alot < Formula
   depends_on "gpgme"
   depends_on "libmagic"
   depends_on "notmuch"
-  depends_on "python@3.9"
+  depends_on "python@3.10"
   depends_on "six"
 
   resource "Automat" do
@@ -117,26 +118,20 @@ class Alot < Formula
   end
 
   test do
-    (testpath/".notmuch-config").write "[database]\npath=#{testpath}/Mail"
+    (testpath/".notmuch-config").write <<~EOS
+      [database]
+      path=#{testpath}/Mail
+    EOS
     (testpath/"Mail").mkpath
     system Formula["notmuch"].bin/"notmuch", "new"
 
-    begin
-      pid = fork do
-        $stdout.reopen("/dev/null")
-        $stdin.reopen("/dev/null")
-        if OS.mac?
-          exec "script", "-q", "/dev/null", bin/"alot", "--logfile", testpath/"out.log"
-        else
-          exec "script", "-q", "/dev/null", "-e", "-c", "#{bin}/alot --logfile #{testpath}/out.log"
-        end
-      end
+    require "pty"
+    PTY.spawn(bin/"alot", "--logfile", testpath/"out.log") do |_r, _w, pid|
       sleep 10
-    ensure
       Process.kill 9, pid
     end
 
     assert_predicate testpath/"out.log", :exist?, "out.log file should exist"
-    assert_match "setup gui", File.read(testpath/"out.log")
+    assert_match "setup gui", (testpath/"out.log").read
   end
 end

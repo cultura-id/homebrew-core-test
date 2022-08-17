@@ -3,30 +3,29 @@ class Conan < Formula
 
   desc "Distributed, open source, package manager for C/C++"
   homepage "https://conan.io"
-  url "https://files.pythonhosted.org/packages/c3/e6/d2ae26462e2dc7cc9c932f94c6fe16e2af86f7e6013a22e55b77911416a8/conan-1.50.0.tar.gz"
-  sha256 "35208a1a2b710f1a20f001a1e086ada9c693c370bcdeba61571e17ad518a9d02"
+  url "https://files.pythonhosted.org/packages/c4/cc/139baa283f9fd238a865203563de550e90f5a6bfbc9259d30fbde5b258f5/conan-1.51.2.tar.gz"
+  sha256 "a7ebf0909333af5dc43212b501db0e5a8630d33d7e32fa1e3750aa54b0351a21"
   license "MIT"
   head "https://github.com/conan-io/conan.git", branch: "develop"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "ef9252683dbc85ffc777d45931d1b14c0593b0eadacff3f496e611900fef76c0"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "9144e39a282a0a0a8afa891c3c49014de8a469b1d30e2ef16ed4a335c8435b02"
-    sha256 cellar: :any_skip_relocation, monterey:       "f115dc55837dd38c4f7bba7a477ec87748cd4b14c0da5d95c99cf292da93458a"
-    sha256 cellar: :any_skip_relocation, big_sur:        "1a189dcdeefc700a59b6ecb5f9153f3adc79d2e8e31985d9f98e08f80cbbbca2"
-    sha256 cellar: :any_skip_relocation, catalina:       "a75877397eea9089e96ea1ff359eea6432ae981b9eb9b35fd9e7af026be00bb3"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "550ae2d2df0ee5876bb18caced96a89e6f96d4db9f4fa272ac71615d9b780a49"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "8f4c81bd354cb045fff9b362c92fcdf51b4bbcb3cc8c3074f4a7d564e97f2c7a"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "27233430e7abec140862ac1703432f69bef9a93e02b8bc567edc9f125e6aca49"
+    sha256 cellar: :any_skip_relocation, monterey:       "6669f0c21563ac5d64c2634ee12cb6013c82d3036b97e736a1a7e0f8c108088e"
+    sha256 cellar: :any_skip_relocation, big_sur:        "fb141cc090bbe947f9ce2d9c897c9b98c8a5cbaceeab7c86239c587f3d4dda46"
+    sha256 cellar: :any_skip_relocation, catalina:       "b8c1fcf468ea0d27f4291163d144b77fa8977cc761446711d615dca59c1a6fb5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "49ddc0f1bd48dc6f705f0bd23eacd1d78e7444890dd09f15af7ec6c1aae1a4da"
   end
 
   depends_on "pkg-config" => :build
   depends_on "cmake" => :test
-  depends_on "libffi"
   depends_on "openssl@1.1"
   depends_on "python@3.10"
   depends_on "six"
 
   resource "bottle" do
-    url "https://files.pythonhosted.org/packages/95/e3/5749d7657b6fb38d65afb3c0b345514a783de7a9feb4fab594fa0bacc2a0/bottle-0.12.21.tar.gz"
-    sha256 "787c61b6cc02b9c229bf2663011fac53dd8fc197f7f8ad2eeede29d888d7887e"
+    url "https://files.pythonhosted.org/packages/7c/58/75f3765b0a3f86ef0b6e0b23d0503920936752ca6e0fc27efce7403b01bd/bottle-0.12.23.tar.gz"
+    sha256 "683de3aa399fb26e87b274dbcf70b1a651385d459131716387abdc3792e04167"
   end
 
   resource "certifi" do
@@ -35,8 +34,8 @@ class Conan < Formula
   end
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/56/31/7bcaf657fafb3c6db8c787a865434290b726653c912085fbd371e9b92e1c/charset-normalizer-2.0.12.tar.gz"
-    sha256 "2857e29ff0d34db842cd7ca3230549d1a697f96ee6d3fb071cfa6c7393832597"
+    url "https://files.pythonhosted.org/packages/93/1d/d9392056df6670ae2a29fcb04cfa5cee9f6fbde7311a1bb511d4115e9b7a/charset-normalizer-2.1.0.tar.gz"
+    sha256 "575e708016ff3a5e3681541cb9d79312c416835686d054a23accb873b254f413"
   end
 
   resource "colorama" do
@@ -105,8 +104,8 @@ class Conan < Formula
   end
 
   resource "requests" do
-    url "https://files.pythonhosted.org/packages/e9/23/384d9953bb968731212dc37af87cb75a885dc48e0615bd6a303577c4dc4b/requests-2.28.0.tar.gz"
-    sha256 "d568723a7ebd25875d8d1eaf5dfa068cd2fc8194b2e483d7b1f7c81918dbec6b"
+    url "https://files.pythonhosted.org/packages/a5/61/a867851fd5ab77277495a8709ddda0861b28163c4613b011bc00228cc724/requests-2.28.1.tar.gz"
+    sha256 "7c5599b102feddaa661c826c56ab4fee28bfd17f5abca1ebbe3e7f19d7c97983"
   end
 
   resource "tqdm" do
@@ -115,8 +114,8 @@ class Conan < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/1b/a5/4eab74853625505725cefdf168f48661b2cd04e7843ab836f3f63abf81da/urllib3-1.26.9.tar.gz"
-    sha256 "aabaf16477806a5e1dd19aa41f8c2b7950dd3c746362d7e3223dbe6de6ac448e"
+    url "https://files.pythonhosted.org/packages/6d/d5/e8258b334c9eb8eb78e31be92ea0d5da83ddd9385dc967dd92737604d239/urllib3-1.26.11.tar.gz"
+    sha256 "ea6e8fb210b19d950fab93b60c9009226c63a28808bc8386e05301e25883ac0a"
   end
 
   def install

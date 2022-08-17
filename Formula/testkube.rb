@@ -1,17 +1,17 @@
 class Testkube < Formula
   desc "Kubernetes-native framework for test definition and execution"
   homepage "https://testkube.io"
-  url "https://github.com/kubeshop/testkube/archive/v1.4.4.tar.gz"
-  sha256 "475ed2f6105c335ca38d3d660bf0057c1876bb0f326a8d64ff3f0d5d360648f2"
+  url "https://github.com/kubeshop/testkube/archive/v1.4.22.tar.gz"
+  sha256 "9070c995ed608ce762472c982baf0588a15e6ebc2cc8962d61767424e15b934d"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "442b7f6467751f4a8985a7e9106e274f08b127a9d5a8d5f0cc4ff7c0d50eb268"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "442b7f6467751f4a8985a7e9106e274f08b127a9d5a8d5f0cc4ff7c0d50eb268"
-    sha256 cellar: :any_skip_relocation, monterey:       "32ddad3e6b5bb96d0f2c279655e7dacee8b24ab87f5cc34356ae233451875ab5"
-    sha256 cellar: :any_skip_relocation, big_sur:        "32ddad3e6b5bb96d0f2c279655e7dacee8b24ab87f5cc34356ae233451875ab5"
-    sha256 cellar: :any_skip_relocation, catalina:       "32ddad3e6b5bb96d0f2c279655e7dacee8b24ab87f5cc34356ae233451875ab5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "24c4c7de439ce729b0f5c576fd3e0de8945a30e74aea653d80cbf36376d9e478"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "acd07a2282dc9f9abb0b2039597517c723a521f93b4a8a2e38a6d5ff7fa2cf05"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "acd07a2282dc9f9abb0b2039597517c723a521f93b4a8a2e38a6d5ff7fa2cf05"
+    sha256 cellar: :any_skip_relocation, monterey:       "910ce4430a2c10b668d2aa85006c3e2af18b6fec55e6bedf1011e79bc254d696"
+    sha256 cellar: :any_skip_relocation, big_sur:        "910ce4430a2c10b668d2aa85006c3e2af18b6fec55e6bedf1011e79bc254d696"
+    sha256 cellar: :any_skip_relocation, catalina:       "910ce4430a2c10b668d2aa85006c3e2af18b6fec55e6bedf1011e79bc254d696"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3a34934e0ee28663a9274714162f64899d98ead626219221a20f680e64421f96"
   end
 
   depends_on "go" => :build

@@ -2,7 +2,7 @@ class Julia < Formula
   desc "Fast, Dynamic Programming Language"
   homepage "https://julialang.org/"
   license all_of: ["MIT", "BSD-3-Clause", "Apache-2.0", "BSL-1.0"]
-  revision 1
+  revision 2
   head "https://github.com/JuliaLang/julia.git", branch: "master"
 
   stable do
@@ -45,13 +45,19 @@ class Julia < Formula
       url "https://github.com/JuliaLang/julia/commit/4d7fc8465ed9eb820893235a6ff3d40274b643a7.patch?full_index=1"
       sha256 "3a34a2cd553929c2aee74aba04c8e42ccb896f9d491fb677537cd4bca9ba7caa"
     end
+
+    # Fixes for gcc12 https://github.com/Homebrew/homebrew-core/pull/107875#issuecomment-1214216233
+    patch :p0 do
+      url "https://raw.githubusercontent.com/archlinux/svntogit-community/bee1243b4ec66da31097f84600b37451435cfb1e/trunk/julia-gcc-12.patch?full_index=1"
+      sha256 "b903859c262048057f873e4a39c4837382896d3059860465443823133a5a59da"
+    end
   end
 
   bottle do
-    sha256 cellar: :any,                 monterey:     "15be9006213658ba3d7c05c71b823350a6f9fbab94bb8c7932b883ed1d05ef05"
-    sha256 cellar: :any,                 big_sur:      "b6e385b9bf7df494671cf133b0c18f2efc73c2a93572d25a8908c1a0a73c38d8"
-    sha256 cellar: :any,                 catalina:     "a5c1388da7344d1d64ba709579a60ca61457dd6e0551f170791c66e98a9dc6f9"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "22f2a645abca68dab52522cb1840c174a0d02ed97022096a4960c701eeb4dddc"
+    sha256 cellar: :any,                 monterey:     "d2d3dc68a8a6d8f741143086635b0f450c0f927568b7416b0c225d7573f129e1"
+    sha256 cellar: :any,                 big_sur:      "540ff0df2e550fc8b7fedbf0a762c28437b759fa50355218a6459740c2a9ec17"
+    sha256 cellar: :any,                 catalina:     "7d822cd4f8bdbb72feddde470fda0e48738453bf7992833a6d24d0a835166bea"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "ad37d0a03e01a5ff8166ee68ceb0e474c4803066216f8084b50ef0b42b45ed5e"
   end
 
   # Requires the M1 fork of GCC to build

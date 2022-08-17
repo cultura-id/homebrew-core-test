@@ -3,18 +3,18 @@ class Bzt < Formula
 
   desc "BlazeMeter Taurus"
   homepage "https://gettaurus.org/"
-  url "https://files.pythonhosted.org/packages/c5/20/92b6b2e4938b0490f56872a1c0bd3959cc2089e8ba3d951965ae9c359210/bzt-1.16.9.tar.gz"
-  sha256 "2d8af77525035081e7cb6a9c4d8c55984385bb53e0889088ba86b0a82d87e18c"
+  url "https://files.pythonhosted.org/packages/8f/83/284c721dfaa4a0cd55958c4a9511b94a5a83b97379da0fd7cbab0684cf75/bzt-1.16.11.tar.gz"
+  sha256 "fe3273cb25ac4e9dfa22c9992492ce3ae85f8c93d24901984e61dc6d6e11048d"
   license "Apache-2.0"
   head "https://github.com/Blazemeter/taurus.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "75294da4472dcf2c6f0e1dc7b9dfff5a4fa6a3664d90cb4b60a6621e51b27bfc"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "41e46d64e66e9ec04b3d8fb1805aa8ec824ede4ca5a8a3dd00fdc07bd7dd1b2d"
-    sha256 cellar: :any_skip_relocation, monterey:       "4a01343008a23082f39d01faae2c15619ce213c3b7907612b4c4c646d05fed58"
-    sha256 cellar: :any_skip_relocation, big_sur:        "db8b46805ea82582bda6ec766bda7071f5bbe9e3a294b75eb97377b685062efd"
-    sha256 cellar: :any_skip_relocation, catalina:       "6986e877a9de6ccc2a90469f49be1ff898c49e38ea0cc3582d26b84cc3a5e131"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "45d49fc9b04028069daeb04fb2929b0e08062aedfd0874acb9a3c07c1977fff8"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "de6a4964df9ef802db61b1ff252af931403a67ac8673698b195c725369a6da86"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "495ad00e7efdd20cc28b53d79e88e112deff9343df8fd2ac31d4c41590bfc881"
+    sha256 cellar: :any_skip_relocation, monterey:       "55a8af215f3274d5380eae1a3f5619997254f10a964e7a99f1eda5dbbab7df32"
+    sha256 cellar: :any_skip_relocation, big_sur:        "b542f049f851f91fbab2ffbdf7e3d5fd02ff2e1b02fbb22dcf8d8f389e8f0dc8"
+    sha256 cellar: :any_skip_relocation, catalina:       "169b137f2dca17aff203a2c7eaa30288757b4e8d850ae9555f4de819fe6c0357"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a5424cbfb4bff6e6dde94ee5d1f56574374d2214713dafbe14e60ade33263a12"
   end
 
   depends_on "cmake" => :build
@@ -53,8 +53,8 @@ class Bzt < Formula
   end
 
   resource "attrs" do
-    url "https://files.pythonhosted.org/packages/d7/77/ebb15fc26d0f815839ecd897b919ed6d85c050feeb83e100e020df9153d2/attrs-21.4.0.tar.gz"
-    sha256 "626ba8234211db98e869df76230a137c4c40a12d72445c45d5f5b716f076e2fd"
+    url "https://files.pythonhosted.org/packages/1a/cb/c4ffeb41e7137b23755a45e1bfec9cbb76ecf51874c6f1d113984ecaa32c/attrs-22.1.0.tar.gz"
+    sha256 "29adc2665447e5191d0e7c568fde78b21f9672d344281d0c6e1ab085429b22b6"
   end
 
   resource "certifi" do
@@ -78,8 +78,8 @@ class Bzt < Formula
   end
 
   resource "Cython" do
-    url "https://files.pythonhosted.org/packages/d4/ad/7ce0cccd68824ac9623daf4e973c587aa7e2d23418cd028f8860c80651f5/Cython-0.29.30.tar.gz"
-    sha256 "2235b62da8fe6fa8b99422c8e583f2fb95e143867d337b5c75e4b9a1a865f9e3"
+    url "https://files.pythonhosted.org/packages/4c/76/1e41fbb365ad20b6efab2e61b0f4751518444c953b390f9b2d36cf97eea0/Cython-0.29.32.tar.gz"
+    sha256 "8733cf4758b79304f2a4e39ebfac5e92341bce47bcceb26c1254398b2f8c1af7"
   end
 
   resource "dill" do
@@ -88,8 +88,8 @@ class Bzt < Formula
   end
 
   resource "frozenlist" do
-    url "https://files.pythonhosted.org/packages/f4/f7/8dfeb76d2a52bcea2b0718427af954ffec98be1d34cd8f282034b3e36829/frozenlist-1.3.0.tar.gz"
-    sha256 "ce6f2ba0edb7b0c1d8976565298ad2deba6f8064d2bebb6ffce2ca896eb35b0b"
+    url "https://files.pythonhosted.org/packages/8a/95/229aacfe85daa28e2792481a98c336bc30d3729533e6a44db537880aca21/frozenlist-1.3.1.tar.gz"
+    sha256 "3a735e4211a04ccfa3f4833547acdf5d2f863bfeb01cfd3edaffbc251f15cec8"
   end
 
   resource "fuzzyset2" do
@@ -153,8 +153,8 @@ class Bzt < Formula
   end
 
   resource "rapidfuzz" do
-    url "https://files.pythonhosted.org/packages/80/2a/0841832a010c57b69a1d515fb9725ada03367a0d028acc960e65e6c31f5f/rapidfuzz-2.2.0.tar.gz"
-    sha256 "acb8839aac452ec61a419fdc8799e8a6e6cd21bed53d04678cdda6fba1247e2f"
+    url "https://files.pythonhosted.org/packages/29/50/e73eeccef303e638bd2e78a4c7fe7579e2e94f8f7ddd48602abc510e192e/rapidfuzz-2.4.2.tar.gz"
+    sha256 "5046d8beaa829e4bc172014a006fa78825643fa39589cbf96f0e7bb098f1e973"
   end
 
   resource "requests" do
@@ -168,8 +168,8 @@ class Bzt < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/25/36/f056e5f1389004cf886bb7a8514077f24224238a7534497c014a6b9ac770/urllib3-1.26.10.tar.gz"
-    sha256 "879ba4d1e89654d9769ce13121e0f94310ea32e8d2f8cf587b77c08bbcdb30d6"
+    url "https://files.pythonhosted.org/packages/6d/d5/e8258b334c9eb8eb78e31be92ea0d5da83ddd9385dc967dd92737604d239/urllib3-1.26.11.tar.gz"
+    sha256 "ea6e8fb210b19d950fab93b60c9009226c63a28808bc8386e05301e25883ac0a"
   end
 
   resource "urwid" do
@@ -183,8 +183,8 @@ class Bzt < Formula
   end
 
   resource "yarl" do
-    url "https://files.pythonhosted.org/packages/f6/da/46d1b3d69a9a0835dabf9d59c7eb0f1600599edd421a4c5a15ab09f527e0/yarl-1.7.2.tar.gz"
-    sha256 "45399b46d60c253327a460e99856752009fcee5f5d3c80b2f7c0cae1c38d56dd"
+    url "https://files.pythonhosted.org/packages/d6/04/255c68974ec47fa754564c4abba8f61f9ed68b869bbbb854198d6259c4f7/yarl-1.8.1.tar.gz"
+    sha256 "af887845b8c2e060eb5605ff72b6f2dd2aab7a761379373fd89d314f4752abbf"
   end
 
   def install

@@ -3,18 +3,18 @@ class Awscli < Formula
 
   desc "Official Amazon AWS command-line interface"
   homepage "https://aws.amazon.com/cli/"
-  url "https://github.com/aws/aws-cli/archive/2.7.20.tar.gz"
-  sha256 "51c2ff0511565ca40c4d1c2262f275719bec2aefc5a62e5ccbd335ad8918cf1e"
+  url "https://github.com/aws/aws-cli/archive/2.7.24.tar.gz"
+  sha256 "0bd59252a98b4497b62d16811617f993ae7ab2c1116cb443da5f2ab4079631c1"
   license "Apache-2.0"
   head "https://github.com/aws/aws-cli.git", branch: "v2"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "04719650fa20f34f235e141407b4a952c302f038ed5da0c2a93044a45f5480e5"
-    sha256 cellar: :any,                 arm64_big_sur:  "7581b14d1c2f8a1248b82a357c57e54627a9dbd370c007458a5d2f77fc5e725a"
-    sha256 cellar: :any,                 monterey:       "baa8bcca235ca7274bac2862daaa4cf03411c90aa810848ad7ac355b48865d04"
-    sha256 cellar: :any,                 big_sur:        "f56e6e14728a1ad8e18592b3abb1f5cc58928fe696e7a0a7bf50f2cfa205c578"
-    sha256 cellar: :any,                 catalina:       "db182ca6104bdafe256f6b2209c1955a7ead05492b63bdf256d5bc66e1c23a9d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "56e81ce46b6f40c3c5e4b41e389d05928b9bb15d6a73b20efd0302ff6c53311a"
+    sha256 cellar: :any,                 arm64_monterey: "a3704c13a3d4cd8a31128b54d67fab9b2cd545ee09b3953436fb31ec972d49b2"
+    sha256 cellar: :any,                 arm64_big_sur:  "75dec0f6efb6ea8c07d0b61a12d12ac994b1e9b777ae5554a9160dc74f87f443"
+    sha256 cellar: :any,                 monterey:       "ba4289545d31807619ea05c7748f62ffd2295a6e252fbf72839cfcbcdd0e0893"
+    sha256 cellar: :any,                 big_sur:        "ec6b94a13f994a1cf71f5462e79a36a7af93928221139855d2a694a35cb28147"
+    sha256 cellar: :any,                 catalina:       "d1687f56d455e9096a158468b7b82ab1f6819887e3b469d6a425f5c2953a5233"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5fc4bc34174c8e61bd8da6ed4722d3af8750c3ea8b76a8d063036b29aa6e00fa"
   end
 
   depends_on "cmake" => :build
@@ -29,8 +29,8 @@ class Awscli < Formula
   # 2. Ignore `six`. Update all other PyPI packages
 
   resource "awscrt" do
-    url "https://files.pythonhosted.org/packages/69/f6/f09b1035951a9dff428d9606aa361a78437fbb2572d22059c7adfff576f1/awscrt-0.13.11.tar.gz"
-    sha256 "631dc8dd10f9ecdc7a0af9b89a8739ce631b76c1de6223208437db414a2bdfc1"
+    url "https://files.pythonhosted.org/packages/51/1f/4d9193f7b16d102c3c11d8edcb11ea741ac6562d8fcf4d1ae1aa223f197c/awscrt-0.14.0.tar.gz"
+    sha256 "3062d315cb16542fe04dd8239f2e8bc3238ee9045cd5070b915cf2ebbecbaaac"
   end
 
   resource "cffi" do

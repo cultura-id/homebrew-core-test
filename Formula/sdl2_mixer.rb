@@ -1,8 +1,8 @@
 class Sdl2Mixer < Formula
   desc "Sample multi-channel audio mixer library"
   homepage "https://github.com/libsdl-org/SDL_mixer"
-  url "https://github.com/libsdl-org/SDL_mixer/releases/download/release-2.6.0/SDL2_mixer-2.6.0.tar.gz"
-  sha256 "f94a4d3e878cb191c386a714be561838240012250fe17d496f4ff4341d59a391"
+  url "https://github.com/libsdl-org/SDL_mixer/releases/download/release-2.6.1/SDL2_mixer-2.6.1.tar.gz"
+  sha256 "bc5c7b85f297e5f3cb34c99c366a4746922fc41365b15fd78a164dda71a861a3"
   license "Zlib"
 
   # This formula uses a file from a GitHub release, so we check the latest
@@ -10,15 +10,16 @@ class Sdl2Mixer < Formula
   livecheck do
     url :stable
     strategy :github_latest
+    regex(%r{href=.*?/tag/release[._-]v?(\d+(?:\.\d+)+)["' >]}i)
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "d6b6b29cc6681cc4007160f3cc6550bf93eb648802d12c0e3c051558bf4ce3b6"
-    sha256 cellar: :any,                 arm64_big_sur:  "6292ec831d3b011033d3d1c39b62416566bfcfe0765ebc6765434573b2717908"
-    sha256 cellar: :any,                 monterey:       "ae3440fea6ed195556c35d219f994fc9d1aa0a890f371ab92feecdf88089c70c"
-    sha256 cellar: :any,                 big_sur:        "596454b3f76224043a3fa5868759af52863db0e53786ea2c24f8ef6e9f569d9a"
-    sha256 cellar: :any,                 catalina:       "6f53dbfeecb85112c38ad1cb03b46096d00ee25feda58173ef63c8797cddf64d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3653463a39485ebd265e0ffa747d2bfe652ba7acec1bfe32782da62ac816494b"
+    sha256 cellar: :any,                 arm64_monterey: "0e875d4331ba85cb625555f1b4438a1317f02e95a9cac9f77eb5a8d8c7a19987"
+    sha256 cellar: :any,                 arm64_big_sur:  "f6834560a29e6c8a3072cecf24145058efce8fae30bfe321225319b0c7819823"
+    sha256 cellar: :any,                 monterey:       "adf9e45386be2f3ce2ae531e6d124c3d5f257edd8662f55631e338622a0598e1"
+    sha256 cellar: :any,                 big_sur:        "d8aad7143f7ff8f4c1d04fa988fafa0e5f461be113b1640b372a3faddcecb149"
+    sha256 cellar: :any,                 catalina:       "c429a9719bec87c8bab90b795b1bcf6e5cc4ddc55abd5a84844c61502bd3f373"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3a909b72a55446ed858eb836a7ac29227942dd7799c3f74e3f067279bdc91c8a"
   end
 
   head do

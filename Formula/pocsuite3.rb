@@ -3,18 +3,18 @@ class Pocsuite3 < Formula
 
   desc "Open-sourced remote vulnerability testing framework"
   homepage "https://pocsuite.org/"
-  url "https://files.pythonhosted.org/packages/df/96/672fa3ca78ca28f8dfa2084a5b3a1027ec84e186337165b7ab46c2d0fac1/pocsuite3-1.9.7.tar.gz"
-  sha256 "2f241a24c5149056c0ab8de0b89746cc9b1df4cccdb7531c1bf0a99b802e804a"
+  url "https://files.pythonhosted.org/packages/c9/f6/211b0c61892793a11ebe26b6cdf6ceb7d9d30b75a96279b71548637a97ea/pocsuite3-1.9.8.tar.gz"
+  sha256 "2354b833b858a0ac556501524ec351ad176336297c0657b82795ffd037c8b7bf"
   license "GPL-2.0-only"
   head "https://github.com/knownsec/pocsuite3.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4b5b66a55aeb81f8132195c523e221f954327523eb75dfc05ac6348fb137820f"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "2667e73ce32e13f8025c1225ab04d587a8220268b04e82358fd2259b0fe66518"
-    sha256 cellar: :any_skip_relocation, monterey:       "cc9e909dbcf8b3fa2204d4c1fa932bae4f15f36c09eee3049942534fe9f8c609"
-    sha256 cellar: :any_skip_relocation, big_sur:        "54b5fdaab9d2fde48cbe49bce65bc3c3f6214da0297805b2aa09d045d4cf59eb"
-    sha256 cellar: :any_skip_relocation, catalina:       "4c34a02044a300c6e2582c9741094759468c4543e592ebadb05410d20bc04e64"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f9df2393e13e7e4e340aee26ecdb83393797ab53cf79249f49e8125225de9f27"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "06bbeb103705ce1edb573f9e481a130e86fc7036889247d38a452d8b8775dee3"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "d0f6eae34d445fde4c64c45c705709f52634b88ca794a599eabd9e014f8f2003"
+    sha256 cellar: :any_skip_relocation, monterey:       "df481561d28b17c41f19060d3ac024dba44745947d87a098607394d16c61ac70"
+    sha256 cellar: :any_skip_relocation, big_sur:        "b421182e095c8de22c8e910b7bcb37ac61f8f34b0b70133e30dc1ffbe4e3d80c"
+    sha256 cellar: :any_skip_relocation, catalina:       "5164a94a79fc7018f7a03dfe154057837187c16e1d93373b3c083f041de97092"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "09765f4011c1f973c2e419daf473fb7dc545258cce5221e33baf3be8f3018354"
   end
 
   depends_on "python@3.10"

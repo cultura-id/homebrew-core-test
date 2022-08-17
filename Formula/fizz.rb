@@ -1,18 +1,18 @@
 class Fizz < Formula
   desc "C++14 implementation of the TLS-1.3 standard"
   homepage "https://github.com/facebookincubator/fizz"
-  url "https://github.com/facebookincubator/fizz/releases/download/v2022.07.04.00/fizz-v2022.07.04.00.tar.gz"
-  sha256 "48941c3726b99aa9b22480ff92cbe3715154df0a4330ad42485b3d7649167b76"
+  url "https://github.com/facebookincubator/fizz/releases/download/v2022.08.15.00/fizz-v2022.08.15.00.tar.gz"
+  sha256 "580c784f9302814daa2bab9e5fa68c29751470b4d95a65dd36f6b2b70f3d7ad4"
   license "BSD-2-Clause"
   head "https://github.com/facebookincubator/fizz.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "0a16d13c03f99fd35c47f3528afda470d6653c1a7041344356ebb6fe002fa7bc"
-    sha256 cellar: :any,                 arm64_big_sur:  "c3bf550d89cbd822b1a7b1e2744d39f1e390a3efb0c4d24b289faf7a2d52b64c"
-    sha256 cellar: :any,                 monterey:       "f18901511e59bad74887af75336226bc375aeb481f0f24934c5ce6d7eed6ef4d"
-    sha256 cellar: :any,                 big_sur:        "4e44b686bc4ca8a8d5e899702499cb4877ce9b5cab1134533d9e9273f7975140"
-    sha256 cellar: :any,                 catalina:       "2d2a3bba223159fa034c5ea1723fcbb1a52ef14218c307ef1e9e67145a4a2b27"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8b3695a225c09c9803ac0a4a079b37a82df1c2a26c79ae55564d6d6e6cf430d5"
+    sha256 cellar: :any,                 arm64_monterey: "adec751e289a82d40142fb764265d69c3f721eaf712382222d221178d45702de"
+    sha256 cellar: :any,                 arm64_big_sur:  "0dc3392354ff5429f86aed93553a79f54a5fde09589ea36b257ce17ef61957f0"
+    sha256 cellar: :any,                 monterey:       "efd200b522ca06b0006fdbb16190ce77711a36f89f0cb4acb879878405882268"
+    sha256 cellar: :any,                 big_sur:        "d89661faeef96b3c5d85a1297ce888ddad82dea0f77db62bb6919ea675cd78fa"
+    sha256 cellar: :any,                 catalina:       "04d255eae7c51abd0f00948203a30c49c95e9cf0034b2e016f401b3c0d4db2ec"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b0d6daa65ea5e1ed0ff2c94cbcc1f6e65d68a7e471d09ee31c6f36f22a1ebb36"
   end
 
   depends_on "cmake" => :build
@@ -34,6 +34,13 @@ class Fizz < Formula
   end
 
   fails_with gcc: "5"
+
+  # Disable `liboqs` requirement. Remove in next release.
+  # https://github.com/facebookincubator/fizz/issues/79
+  patch do
+    url "https://github.com/facebookincubator/fizz/commit/6e237b10a58a8d90ed5f1819abd7842c423fb956.patch?full_index=1"
+    sha256 "d9eda54340d4f61641c8f19974ffa51417871ca2f7a0bd581818fa5560860117"
+  end
 
   def install
     args = []

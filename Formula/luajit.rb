@@ -9,12 +9,12 @@ class Luajit < Formula
   # Update this to the tip of the `v2.1` branch at the start of every month.
   # Get the latest commit with:
   #   `git ls-remote --heads https://github.com/LuaJIT/LuaJIT.git v2.1`
-  url "https://github.com/LuaJIT/LuaJIT/archive/50936d784474747b4569d988767f1b5bab8bb6d0.tar.gz"
+  url "https://github.com/LuaJIT/LuaJIT/archive/a7d0265480c662964988f83d4e245bf139eb7cc0.tar.gz"
   # Use the version scheme `2.1.0-beta3-yyyymmdd.x` where `yyyymmdd` is the date of the
   # latest commit at the time of updating, and `x` is the number of commits on that date.
   # `brew livecheck luajit` will generate the correct version for you automatically.
-  version "2.1.0-beta3-20220712.6"
-  sha256 "4d44e4709130b031c1c2c81cf5c102dfce877bf454409dabba03249e18870e66"
+  version "2.1.0-beta3-20220728.2"
+  sha256 "7d7f58ca5c02b453ed4ddd2298e741053cbd6cd3d96e79460d06ec6684244c59"
   license "MIT"
   head "https://luajit.org/git/luajit-2.0.git", branch: "v2.1"
 
@@ -40,36 +40,35 @@ class Luajit < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "519a2e60557c73f7a181727d69aa7d94007afa7d6041b823c867790d80313176"
-    sha256 cellar: :any,                 arm64_big_sur:  "09f3f32a0869b6ed81c250f66b1ed6a5d9d4db8fd8e0b25c8b2ad6a7b7be343e"
-    sha256 cellar: :any,                 monterey:       "d7796f1663ba457d6deb7a19cfaea8be8a21d8064d73fb13196480bc307708fc"
-    sha256 cellar: :any,                 big_sur:        "2182294caa7cf5589ebb5d6862e5eaa0fa367f697f95b44058f59f57db5b524c"
-    sha256 cellar: :any,                 catalina:       "ddc9c0063bb5d8d47ece519063e118983a9b0c9b5add83c9dafc0dcb5c59682a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "95a5d53908af9ce0abe23dbe82df20bdeac624ffe7d2e84b8d92b89aebd76e9c"
+    sha256 cellar: :any,                 arm64_monterey: "b89e5a7a1fbd4b5d44d45fdfefb4612d932557cfdcc0db43ea7c89ad07e317a3"
+    sha256 cellar: :any,                 arm64_big_sur:  "bd6abf64656efeff40ad81ec2bc1123ca0c642dd99f07a7c7e68433cc6b3f03a"
+    sha256 cellar: :any,                 monterey:       "a89bae71896c0e4c17a0832ee7aea3914ced8bb5c38aaed5ad52d3d802cfea64"
+    sha256 cellar: :any,                 big_sur:        "daa162fc47e6ac409532028fb3fd4722cf8593fa594bc06130f4a01f69861572"
+    sha256 cellar: :any,                 catalina:       "e2f445593b813dfb9380ea2c74d499b7dda5d5079a9c9660a1e995d271931276"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "502da7082ed0259e3e34b95e68a44024f6281f7a56ade5db0b11e2d240b66b7c"
   end
 
   def install
-    # https://github.com/LuaJIT/LuaJIT/issues/648#issuecomment-752023149
-    ENV.runtime_cpu_detection
-
     # 1 - Override the hardcoded gcc.
     # 2 - Remove the "-march=i686" so we can set the march in cflags.
     # Both changes should persist and were discussed upstream.
-    # Also: Set `LUA_ROOT` to `HOMEBREW_PREFIX` so that Luajit can find modules outside its own keg.
-    # This should avoid the need for writing env scripts that specify `LUA_PATH` or `LUA_CPATH`.
     inreplace "src/Makefile" do |f|
       f.change_make_var! "CC", ENV.cc
       f.gsub!(/-march=\w+\s?/, "")
-      f.gsub!(/^(  TARGET_XCFLAGS\+= -DLUA_ROOT=)\\"\$\(PREFIX\)\\"$/, "\\1\\\"#{HOMEBREW_PREFIX}\\\"")
     end
 
     # Per https://luajit.org/install.html: If MACOSX_DEPLOYMENT_TARGET
     # is not set then it's forced to 10.4, which breaks compile on Mojave.
     ENV["MACOSX_DEPLOYMENT_TARGET"] = MacOS.version
 
-    # Pass `Q=` to build verbosely.
-    system "make", "amalg", "PREFIX=#{prefix}", "Q="
-    system "make", "install", "PREFIX=#{prefix}", "Q="
+    # Pass `Q= E=@:` to build verbosely.
+    verbose_args = %w[Q= E=@:]
+
+    # Build with PREFIX=$HOMEBREW_PREFIX so that luajit can find modules outside its own keg.
+    # This allows us to avoid having to set `LUA_PATH` and `LUA_CPATH` for non-vendored modules.
+    system "make", "amalg", "PREFIX=#{HOMEBREW_PREFIX}", *verbose_args
+    system "make", "install", "PREFIX=#{prefix}", *verbose_args
+    doc.install (buildpath/"doc").children
 
     # We need `stable.version` here to avoid breaking symlink generation for HEAD.
     upstream_version = stable.version.to_s.sub(/-\d+\.\d+$/, "")

@@ -3,17 +3,17 @@ class YtDlp < Formula
 
   desc "Fork of youtube-dl with additional features and fixes"
   homepage "https://github.com/yt-dlp/yt-dlp"
-  url "https://files.pythonhosted.org/packages/15/05/d9c74834b34ed3a42918ff047d6045f9aaa358f2b46ee5c1a45b4a23e368/yt-dlp-2022.7.18.tar.gz"
-  sha256 "0e7b81fc6ac8d1b7d3fffa79f9044ca4163784422582c9a3593305da2a69ec02"
+  url "https://files.pythonhosted.org/packages/00/05/fc7d6be0bd5641a756f7d63a15fa81453b7189e4a5a7212834bd2bd98c20/yt-dlp-2022.8.14.tar.gz"
+  sha256 "9a2ceb76a4cc48aa80127eff8a853d9c8b7efe8be121c2123dcbfd3d06bc945f"
   license "Unlicense"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "23ab80c4412d768c4f700aa07d6a3ad13c6322f7b9d9719571e8548d26f77378"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "81c63a22c91e559c1e368e04884bdb6a87b41e6b3e0644be5029ca839e398eca"
-    sha256 cellar: :any_skip_relocation, monterey:       "6ad6273c8a29367adc24f929b1a081a6350c7264aa789b552b1de05c53417e87"
-    sha256 cellar: :any_skip_relocation, big_sur:        "0b0d5e9f81fc95e46aca037fe76fe2da3c63364930e879da1c4087f196c83a58"
-    sha256 cellar: :any_skip_relocation, catalina:       "25ff19ef907bd626f62d61838ae8cff3f12d2ca9ed3cd023ab75b7555c910a0e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4dde158cef35c50fd05f25b106091640011947f25ec645491941bffbcebc2213"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "8cfa96d991d3bbfa25d9549c23b37f9dcbff6e7d86675e8a2bae8effd62ee14d"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "608f97e9de7f58c2dd157bba2398e861109f07287c26dd84c0534d7fa45cf89f"
+    sha256 cellar: :any_skip_relocation, monterey:       "fb2cbbd4fef3d29a3f6701c45532970e977f54e842b3d4fbb83b153048823828"
+    sha256 cellar: :any_skip_relocation, big_sur:        "fbd99c84bce786c33dd3faee1e86dd2693af54e707b98ecdafc50913155d5b2c"
+    sha256 cellar: :any_skip_relocation, catalina:       "27f5ecd87f94865141b829dac00e2994b39c0abf05e4c75f49be0803569aa242"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6cee80370ee112342728eadd472eec57c396018f37771bcb8bdc6bf216a2e7c6"
   end
 
   head do

@@ -4,6 +4,7 @@ class Mpd < Formula
   url "https://www.musicpd.org/download/mpd/0.23/mpd-0.23.8.tar.xz"
   sha256 "86bb569bf3b519821f36f6bb5564e484e85d2564411b34b200fe2cd3a04e78cf"
   license "GPL-2.0-or-later"
+  revision 1
   head "https://github.com/MusicPlayerDaemon/MPD.git", branch: "master"
 
   livecheck do
@@ -12,12 +13,12 @@ class Mpd < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "c1e5f343586226a73515a55ab6eefdfc4f612d1228d8a61448932b80c0ee34a2"
-    sha256 cellar: :any, arm64_big_sur:  "f49c948bee82b0295edcd6e737de721f34042660a35d3d985d198ae46bcb1a42"
-    sha256 cellar: :any, monterey:       "548e4d6980f7d6494e3a8a2ac1fa1eb9a8567f2f91a234ce008ed57f7ae68593"
-    sha256 cellar: :any, big_sur:        "18fb691d0de481fe2f71853b6b4d3e9e883ba39aecc1e64be712e6925d8a1cec"
-    sha256 cellar: :any, catalina:       "fb403070b7af2733711ac15cb30f9e4fee565959ff0ffbf3895b20d676ddbe5d"
-    sha256               x86_64_linux:   "718a4161042fe464adc1a0591f229a3fc69cd1dce5ef236a7e8d55743230dd9b"
+    sha256 cellar: :any, arm64_monterey: "50f5c4e6d3d6c9e6e5b06923525524da8b7b640f527534d6d539ebc23135f677"
+    sha256 cellar: :any, arm64_big_sur:  "fe909593e6bde1e9bbeb3897dc5c899c4c83e879a9f5dbbd8a772068e008bfd0"
+    sha256 cellar: :any, monterey:       "f13dd346b0989fe2de1f162f10622ab0fe1847b10b8261118c04adf664f5a4d8"
+    sha256 cellar: :any, big_sur:        "3fe4a01c943a056d5bc7fb4277001f5b45b1a3d32afeb67688f278c8801dac58"
+    sha256 cellar: :any, catalina:       "162e0a7f6c42edb65957ee5d28bd7592670f34bf3722e71b38f7f9ed1d46957d"
+    sha256               x86_64_linux:   "01199416f22d85c098fa82bff410d5a265f9720808f1b661a3f5061fdcbc4bb6"
   end
 
   depends_on "boost" => :build
@@ -54,6 +55,10 @@ class Mpd < Formula
 
   fails_with gcc: "5"
 
+  # Fix build with FFmpeg 5.1. Backported from
+  # https://github.com/MusicPlayerDaemon/MPD/commit/59792cb0b801854ee41be72d33db9542735df754
+  patch :DATA
+
   def install
     # mpd specifies -std=gnu++0x, but clang appears to try to build
     # that against libstdc++ anyway, which won't work.
@@ -62,6 +67,9 @@ class Mpd < Formula
 
     # Replace symbols available only on macOS 12+ with their older versions.
     # https://github.com/MusicPlayerDaemon/MPD/issues/1580
+    #
+    # This workaround can be removed when the following commit lands in a tagged release (likely 0.23.9):
+    # https://github.com/MusicPlayerDaemon/MPD/commit/bbc088ae4ea19767c102ca740765a30b98ffa96b
     if MacOS.version <= :big_sur
       new_syms = ["kAudioObjectPropertyElementMain", "kAudioHardwareServiceDeviceProperty_VirtualMainVolume"]
       # Doing `ENV.append_to_cflags` twice results in line length errors.
@@ -139,3 +147,24 @@ class Mpd < Formula
     end
   end
 end
+
+__END__
+diff --git a/src/decoder/plugins/FfmpegIo.cxx b/src/decoder/plugins/FfmpegIo.cxx
+index 2e22d9599102ac445fc269c69863f4c2c34bfe1c..5b5c8b40e3a0b95fbf5e75a0cf9b53e2c416a36f 100644
+--- a/src/decoder/plugins/FfmpegIo.cxx
++++ b/src/decoder/plugins/FfmpegIo.cxx
+@@ -21,10 +21,13 @@
+ #define __STDC_CONSTANT_MACROS
+ 
+ #include "FfmpegIo.hxx"
+-#include "libavutil/mem.h"
+ #include "../DecoderAPI.hxx"
+ #include "input/InputStream.hxx"
+ 
++extern "C" {
++#include <libavutil/mem.h>
++}
++
+ AvioStream::~AvioStream()
+ {
+ 	if (io != nullptr) {

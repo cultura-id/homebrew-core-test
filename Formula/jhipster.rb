@@ -3,17 +3,17 @@ require "language/node"
 class Jhipster < Formula
   desc "Generate, develop and deploy Spring Boot + Angular/React applications"
   homepage "https://www.jhipster.tech/"
-  url "https://registry.npmjs.org/generator-jhipster/-/generator-jhipster-7.9.0.tgz"
-  sha256 "ac8a8f5a5f357402047425f55801fd59c2498cd7d3bacd75d8b9bbda296de18e"
+  url "https://registry.npmjs.org/generator-jhipster/-/generator-jhipster-7.9.2.tgz"
+  sha256 "5f089544d6c2f06bbd109d06460ff6f2387b10d4c8fe9a54d4be070a00779b56"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "207f36c6c083f6b950f705b870e313126b33a13c33b1cb32621b143579e4ff87"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "207f36c6c083f6b950f705b870e313126b33a13c33b1cb32621b143579e4ff87"
-    sha256 cellar: :any_skip_relocation, monterey:       "14859d3f33154eed635700a18b2547eb58aaf7f69accfb5f9873fb314d5bd2eb"
-    sha256 cellar: :any_skip_relocation, big_sur:        "14859d3f33154eed635700a18b2547eb58aaf7f69accfb5f9873fb314d5bd2eb"
-    sha256 cellar: :any_skip_relocation, catalina:       "14859d3f33154eed635700a18b2547eb58aaf7f69accfb5f9873fb314d5bd2eb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "207f36c6c083f6b950f705b870e313126b33a13c33b1cb32621b143579e4ff87"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "d6470523be77560242b755bc18af0b91479daea4e60e68409c9a286a6fef4ae2"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "d6470523be77560242b755bc18af0b91479daea4e60e68409c9a286a6fef4ae2"
+    sha256 cellar: :any_skip_relocation, monterey:       "960ac782a7603c74b684a76fa5288014246ef71817fe05c5d267cbb1d94bc146"
+    sha256 cellar: :any_skip_relocation, big_sur:        "960ac782a7603c74b684a76fa5288014246ef71817fe05c5d267cbb1d94bc146"
+    sha256 cellar: :any_skip_relocation, catalina:       "960ac782a7603c74b684a76fa5288014246ef71817fe05c5d267cbb1d94bc146"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d6470523be77560242b755bc18af0b91479daea4e60e68409c9a286a6fef4ae2"
   end
 
   depends_on "node"

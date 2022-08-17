@@ -1,9 +1,9 @@
 class ApacheArrowGlib < Formula
   desc "GLib bindings for Apache Arrow"
   homepage "https://arrow.apache.org/"
-  url "https://www.apache.org/dyn/closer.lua?path=arrow/arrow-8.0.1/apache-arrow-8.0.1.tar.gz"
-  mirror "https://archive.apache.org/dist/arrow/arrow-8.0.1/apache-arrow-8.0.1.tar.gz"
-  sha256 "82d46929f7574715551da21700f100b39f99c3c4d6790f26cac86d869d64e94e"
+  url "https://www.apache.org/dyn/closer.lua?path=arrow/arrow-9.0.0/apache-arrow-9.0.0.tar.gz"
+  mirror "https://archive.apache.org/dist/arrow/arrow-9.0.0/apache-arrow-9.0.0.tar.gz"
+  sha256 "a9a033f0a3490289998f458680d19579cf07911717ba65afde6cb80070f7a9b5"
   license "Apache-2.0"
   head "https://github.com/apache/arrow.git", branch: "master"
 
@@ -12,12 +12,12 @@ class ApacheArrowGlib < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "2b85faa106edf308595c12af9a62a7f05e100cfaba6b337600ec832dba09aa71"
-    sha256 cellar: :any, arm64_big_sur:  "9a1924c7eb7853e71ea0dee8a9e062a657849ae2a25343a37b344c684e8470a3"
-    sha256 cellar: :any, monterey:       "15f68c3d3eff600ae62bd362e3dc32ea0e97cfd45155f747fa4a73db1624ba4c"
-    sha256 cellar: :any, big_sur:        "92e1eb8ccab434bb9d5234ebf620ef4f26e93984778b9864404ceff06af377f0"
-    sha256 cellar: :any, catalina:       "249dff425624bda77f3d26f3f60b3c50a11479e8e11234281b039c4d641535f3"
-    sha256               x86_64_linux:   "570d7b532ae126ead199b182cac3eb3de4ccc01fc5b75adf6bd3dd63d8085ca7"
+    sha256 cellar: :any, arm64_monterey: "78ec02f03f475726bd1458a4e3d417f8b83013f6188257c984a3fb9233d2b3d4"
+    sha256 cellar: :any, arm64_big_sur:  "e4b50a47ce255e90b02edc94dd933ea7e9df3311266b9bc68d6c5b09ef28f6c1"
+    sha256 cellar: :any, monterey:       "d8e6b958b5e6a59b6a0197a5d68381227787693b4a12e858c5bdcb8ea7bc67af"
+    sha256 cellar: :any, big_sur:        "dcb4f474faedf9602169413f71b221cc7d09214401c3be0b733eb2bc6b5f007b"
+    sha256 cellar: :any, catalina:       "9527e1b179e602bc219cce2efe8efcccbd8c23b6947bd86da7d5a86ba610b3b8"
+    sha256               x86_64_linux:   "026467ba89eec611a67fee7d92292c69caf9d3cb8eadf85ca40c0c92e8b588fc"
   end
 
   depends_on "glib-utils" => :build

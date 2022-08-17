@@ -4,6 +4,7 @@ class Gdcm < Formula
   url "https://github.com/malaterre/GDCM/archive/v3.0.14.tar.gz"
   sha256 "12582a87a1f043ce77005590ef1060e92ad36ec07ccf132da49c59f857d413ee"
   license "BSD-3-Clause"
+  revision 1
 
   livecheck do
     url :stable
@@ -11,12 +12,12 @@ class Gdcm < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "a7dc4914a7cd884815177aefc9cc23444bc1efb8a4584cacd7950dc02509e8ad"
-    sha256 arm64_big_sur:  "a3517e5d4b4ba0c89c60456fa1feb5b33d5f11eae0c5c2d0bdd9ba9995e7d663"
-    sha256 monterey:       "76103bde1931e4a7a2b80ea41a9049eeb7d3a5013f7097ea429517137fcf620e"
-    sha256 big_sur:        "58fb14e9d89ae2ffd8adcffeb56edc2a6c94fdd9ea804f5939946e764994c192"
-    sha256 catalina:       "5828042a4147b3e6b8b54cd3c39d15296936dd2d976f49e030baea8c74d82014"
-    sha256 x86_64_linux:   "ebfad3232ed2b2ac02b3ec0dcdbbcd2be320f2834e76ca95186093215eed28cc"
+    sha256 arm64_monterey: "e5545cbba07e64949d430fcbf8f748ab44812715981963cacb791fe351caaca6"
+    sha256 arm64_big_sur:  "1e9a6f71f51e17fffe1e015ea24a4e3b7d8bf8d000750fccc08cd7c55dc576e8"
+    sha256 monterey:       "aaca417828c252769fe1f6dcc392caeea4bffe9c8fdf034dea2d361ca943e914"
+    sha256 big_sur:        "55e74700b796709ff3dabf35a1cef14b6e8aa1554f6d81281b3b16b597d93003"
+    sha256 catalina:       "5881919c7d28e2eb1ab3f769be347e03c56257761499bc34a25fc5cfbf60c79d"
+    sha256 x86_64_linux:   "7811ccfe3dad3ec98dfc068d327bbec0d12b6c9da1f198deab1aede0c2d9b84c"
   end
 
   depends_on "cmake" => :build
@@ -25,56 +26,51 @@ class Gdcm < Formula
   depends_on "swig" => :build
   depends_on "openjpeg"
   depends_on "openssl@1.1"
-  depends_on "python@3.9"
-  depends_on "vtk@8.2"
+  depends_on "python@3.10"
 
   uses_from_macos "expat"
   uses_from_macos "zlib"
 
   on_linux do
     depends_on "gcc"
+    depends_on "util-linux" # for libuuid
   end
 
   fails_with gcc: "5"
 
+  def python3
+    which("python3.10")
+  end
+
   def install
     ENV.cxx11
+    ENV.append "LDFLAGS", "-undefined dynamic_lookup" if OS.mac?
 
-    python3 = Formula["python@3.9"].opt_bin/"python3"
-    xy = Language::Python.major_minor_version python3
     python_include =
       Utils.safe_popen_read(python3, "-c", "from distutils import sysconfig;print(sysconfig.get_python_inc(True))")
            .chomp
-    python_executable = Utils.safe_popen_read(python3, "-c", "import sys;print(sys.executable)").chomp
 
-    args = std_cmake_args + %W[
-      -GNinja
-      -DGDCM_BUILD_APPLICATIONS=ON
-      -DGDCM_BUILD_SHARED_LIBS=ON
-      -DGDCM_BUILD_TESTING=OFF
-      -DGDCM_BUILD_EXAMPLES=OFF
-      -DGDCM_BUILD_DOCBOOK_MANPAGES=OFF
-      -DGDCM_USE_VTK=ON
-      -DGDCM_USE_SYSTEM_EXPAT=ON
-      -DGDCM_USE_SYSTEM_ZLIB=ON
-      -DGDCM_USE_SYSTEM_UUID=ON
-      -DGDCM_USE_SYSTEM_OPENJPEG=ON
-      -DGDCM_USE_SYSTEM_OPENSSL=ON
-      -DGDCM_WRAP_PYTHON=ON
-      -DPYTHON_EXECUTABLE=#{python_executable}
-      -DPYTHON_INCLUDE_DIR=#{python_include}
-      -DGDCM_INSTALL_PYTHONMODULE_DIR=#{lib}/python#{xy}/site-packages
-      -DCMAKE_INSTALL_RPATH=#{lib}
-      -DGDCM_NO_PYTHON_LIBS_LINKING=ON
-    ]
-
-    mkdir "build" do
-      ENV.append "LDFLAGS", "-undefined dynamic_lookup" if OS.mac?
-
-      system "cmake", "..", *args
-      system "ninja"
-      system "ninja", "install"
-    end
+    system "cmake", "-S", ".", "-B", "build", *std_cmake_args,
+                    "-GNinja",
+                    "-DGDCM_BUILD_APPLICATIONS=ON",
+                    "-DGDCM_BUILD_SHARED_LIBS=ON",
+                    "-DGDCM_BUILD_TESTING=OFF",
+                    "-DGDCM_BUILD_EXAMPLES=OFF",
+                    "-DGDCM_BUILD_DOCBOOK_MANPAGES=OFF",
+                    "-DGDCM_USE_VTK=OFF", # No VTK 9 support: https://sourceforge.net/p/gdcm/bugs/509/
+                    "-DGDCM_USE_SYSTEM_EXPAT=ON",
+                    "-DGDCM_USE_SYSTEM_ZLIB=ON",
+                    "-DGDCM_USE_SYSTEM_UUID=ON",
+                    "-DGDCM_USE_SYSTEM_OPENJPEG=ON",
+                    "-DGDCM_USE_SYSTEM_OPENSSL=ON",
+                    "-DGDCM_WRAP_PYTHON=ON",
+                    "-DPYTHON_EXECUTABLE=#{python3}",
+                    "-DPYTHON_INCLUDE_DIR=#{python_include}",
+                    "-DGDCM_INSTALL_PYTHONMODULE_DIR=#{prefix/Language::Python.site_packages(python3)}",
+                    "-DCMAKE_INSTALL_RPATH=#{lib}",
+                    "-DGDCM_NO_PYTHON_LIBS_LINKING=ON"
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
   end
 
   test do
@@ -91,6 +87,6 @@ class Gdcm < Formula
     system ENV.cxx, "-std=c++11", "test.cxx.o", "-o", "test", "-L#{lib}", "-lgdcmDSED"
     system "./test"
 
-    system Formula["python@3.9"].opt_bin/"python3", "-c", "import gdcm"
+    system python3, "-c", "import gdcm"
   end
 end

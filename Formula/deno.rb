@@ -1,18 +1,18 @@
 class Deno < Formula
   desc "Secure runtime for JavaScript and TypeScript"
   homepage "https://deno.land/"
-  url "https://github.com/denoland/deno/releases/download/v1.24.1/deno_src.tar.gz"
-  sha256 "47917607edad9551933997ffd6eeaf45447836d9637c3f805669eef52f104d65"
+  url "https://github.com/denoland/deno/releases/download/v1.24.3/deno_src.tar.gz"
+  sha256 "92d8e03dc3a76d13cc3f4853e82d68e3d96f6b9c877616cbdf8edd429be95821"
   license "MIT"
   head "https://github.com/denoland/deno.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "a6cfbc6e155ddb70c35da96f30ac48d9062f7b8d5ba691b700444569a0095ac9"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "a4710ddd6fc027eeaba1cf9c0173c0520632e38b5f8bea46910bd4ab33728794"
-    sha256 cellar: :any_skip_relocation, monterey:       "2d34a77f8c69bc1806fd6bb72020ae35f57e3a7c9ed9207b45631b935f514887"
-    sha256 cellar: :any_skip_relocation, big_sur:        "3641b72f0a8fb67f9386565d3931bec3c27614f7a890a7cd218fc7154d25ae8e"
-    sha256 cellar: :any_skip_relocation, catalina:       "b06b8276675cdfa59c57386a0ec4a1d2ac227c781e263ad63de2171e2c732519"
-    sha256                               x86_64_linux:   "74eb1ce7669913f77a91472543d8eda7f2272d75d921173ace89670e852d900e"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "746720025d43c2c7a7f5ed52886d69b1e37159029afc8a96a270bfc934fe47b1"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "b09001abe126d75b69575adb20e820c0b863d51b8f1607c4b6d023dbb061bd63"
+    sha256 cellar: :any_skip_relocation, monterey:       "f6b5dff6bf37a6df659aed68d90b207d18a2c9f1b6167effb52fe83420c5794b"
+    sha256 cellar: :any_skip_relocation, big_sur:        "45d7017bf5276d0547b4e2907a940a81f63509233dd49bbfd0622bb9f8fc81d6"
+    sha256 cellar: :any_skip_relocation, catalina:       "021ceff6a4d81ac969d9712da8697c3b9198bd1c15a3717ab41ae42b25c9eab0"
+    sha256                               x86_64_linux:   "c1921216c746d104b55fec0187c2090e649e86c399f7c8ae56d9d82aa56b4a41"
   end
 
   depends_on "llvm" => :build

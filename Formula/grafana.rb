@@ -1,22 +1,22 @@
 class Grafana < Formula
   desc "Gorgeous metric visualizations and dashboards for timeseries databases"
   homepage "https://grafana.com"
-  url "https://github.com/grafana/grafana/archive/v9.0.2.tar.gz"
-  sha256 "77607c4b215164d74ff8e8d75e2a2b72edbaa0afb6e968120b1c3aa508315c29"
+  url "https://github.com/grafana/grafana/archive/v9.1.0.tar.gz"
+  sha256 "46a9bd8b84a2d82cc6f9e8edd045bd49cf7ac94ff150ebe72e6d4397f1dcb73e"
   license "AGPL-3.0-only"
   head "https://github.com/grafana/grafana.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "fb5292a91d3eea90e4f82d2b9875442399d0d99b1eff51a1e18ca47ad687ef5b"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "2bed11d559f5b4c20a276817a67dcc585538120365d9d49e9057d13d48dc7048"
-    sha256 cellar: :any_skip_relocation, monterey:       "6022dd955d971d2d34d70f29e56335610108c84b75081020092e29f3ec641724"
-    sha256 cellar: :any_skip_relocation, big_sur:        "2be01520c749cbc8e395db3fa6c963bcf539e15ddc72f8d1f122616361e4757f"
-    sha256 cellar: :any_skip_relocation, catalina:       "98e7981383cf5322527a889664079931897e57bb248e1acedd500774c9f2dbce"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "78eaa4a160f6c75cefeaf83addbd82a4ec61258350618b282c7e7711a5c3a583"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "1e448b54f7e062cb823fb1bb643b97fc5a37650e290ffc43c6dd83be19e85e83"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "28d7987a5f1ee81d36be6f3e32ed996611b0f22cd809bf01e7f66f07012237a9"
+    sha256 cellar: :any_skip_relocation, monterey:       "d097da6d49c9ce1c8a4be1f83c95e3368f1cb9a25600103cd02233f892572738"
+    sha256 cellar: :any_skip_relocation, big_sur:        "d84db11daea0e8130bc2c41a84f7e89abdceb683ed0cf12674b5298500e4fcf2"
+    sha256 cellar: :any_skip_relocation, catalina:       "ded636294a000bcb800fc04e5d4371fc14e8e521c714b06c6a25b2a3b47d782d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "541a0d658d2b6982ead4b7814e8ff77ea1a18b82c59144e17b33db029d35e354"
   end
 
   depends_on "go" => :build
-  depends_on "node" => :build
+  depends_on "node@16" => :build
   depends_on "yarn" => :build
 
   uses_from_macos "zlib"

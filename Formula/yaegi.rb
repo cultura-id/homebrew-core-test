@@ -1,18 +1,18 @@
 class Yaegi < Formula
   desc "Yet another elegant Go interpreter"
   homepage "https://github.com/traefik/yaegi"
-  url "https://github.com/traefik/yaegi/archive/v0.13.0.tar.gz"
-  sha256 "73af6b8c765bf05abd6e9c209772db686b881a1c6d534542cd35de80743a1b34"
+  url "https://github.com/traefik/yaegi/archive/v0.14.1.tar.gz"
+  sha256 "f480cc37c2d443ccb6fa34477deaf82bc7d3773fc4ea6871b261d31bd430a132"
   license "Apache-2.0"
   head "https://github.com/traefik/yaegi.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "6560eeba9ee315eb07008d150c48e260bf96f057300fe2dcc2ee8dbb58eb47c3"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "413085effa5fa0efda92687820eb0703ef27a3c1b6b40d81b77d05b2ee0b3451"
-    sha256 cellar: :any_skip_relocation, monterey:       "7418a92931fca81b88f4a3bb6d6a8b1909ab5688897056bfcdf4b013e9549625"
-    sha256 cellar: :any_skip_relocation, big_sur:        "4a6e476e1d87a1a64dece9da7e33756de7d6c65451cac86959f1850627c5098b"
-    sha256 cellar: :any_skip_relocation, catalina:       "621005a5bffb9e5e3e0b148e319c90011c0049aab4c854441a90b1426682b3c8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c4239e0113c9520d6a1a972cb3201cfa3a863728b62c4b025319fe555be18171"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "7211fbefe80c40e54eaf65cceb64718010588f932c8ed5527e1bb712e0f3e4c6"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "820d324ff8e8702960bde57a39c190205319f2abe62ce61f9de9dc12ca98df09"
+    sha256 cellar: :any_skip_relocation, monterey:       "fe68264780b68840cb23d79f63fdd4a92f07b11ac6889d1c2295bd3e7d9b406f"
+    sha256 cellar: :any_skip_relocation, big_sur:        "a0ef54440f79af234a50458b3eb7f2339169c6af7defb33c3f8ee9676fcfd869"
+    sha256 cellar: :any_skip_relocation, catalina:       "26f0b08e221dc6e39963b3e6824fa937136eb3e0764fafd5a7c5b232abc0fc91"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6f84a04341fce3a21cf87d4786d0fb7cb530c41f53a3ce8d2cc0a68cb1686ffb"
   end
 
   depends_on "go" => :build

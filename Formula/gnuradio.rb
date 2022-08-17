@@ -6,6 +6,7 @@ class Gnuradio < Formula
   url "https://github.com/gnuradio/gnuradio/archive/refs/tags/v3.10.3.0.tar.gz"
   sha256 "957108a67ec75d99adaad8f3b10be8ae08760a9cef0b659a5c815a4e33898a75"
   license "GPL-3.0-or-later"
+  revision 2
   head "https://github.com/gnuradio/gnuradio.git", branch: "main"
 
   livecheck do
@@ -14,12 +15,12 @@ class Gnuradio < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "301fbc8b1f8b95c2097e5797d1b58677c5eb8fd6b332568cfac2a3e2e3f56561"
-    sha256 cellar: :any,                 arm64_big_sur:  "f24da651f3c3dafd954b7ff78ebe013c147f2ea3e494f205e9ea22afc7a194ed"
-    sha256 cellar: :any,                 monterey:       "8fb7e72f3591148a11751896eea5f52289d2101f59bcd635c2b4a74c9269437a"
-    sha256 cellar: :any,                 big_sur:        "38b9564c51a22ac784cffc0ccf321187af550757575f95e64d79a9b0cb5341bb"
-    sha256 cellar: :any,                 catalina:       "4756f550760246261db3dd9933d2201c75417fdfff15d9fedefabb2c9e4c76b2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "003a6f6e6cd01fd4e1d169d01695d03f2080d9197dc45ff3e6ca21616d8dbe4a"
+    sha256 cellar: :any,                 arm64_monterey: "32943ad6fa874c85731cab9ef9230cf069b89a0cd2a01934c828b501f5abe03a"
+    sha256 cellar: :any,                 arm64_big_sur:  "2a1cb5fdd205f243ec6b1554b1cceb3750f5ef8ff8a0468988b097db8c16bc61"
+    sha256 cellar: :any,                 monterey:       "6cfb00f426887f5b3750bc67df695cd5dd40c122901b6e42e0c00ae8eb9499c5"
+    sha256 cellar: :any,                 big_sur:        "f685bc9aa518d85628ac7c2ffe8a00cd3afd0c0d0f8fab84f7995f00bba6366b"
+    sha256 cellar: :any,                 catalina:       "927c895e82b494c3c00c22aa8b637d0d2dc691b0d27e4b919a0a7949e8e9926e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "010ae1f8e95a5fa9dc81e60ef9930fec27c8c2f07c73ae88fbdd2bcce9c3e2c1"
   end
 
   depends_on "cmake" => :build
@@ -40,7 +41,7 @@ class Gnuradio < Formula
   depends_on "portaudio"
   depends_on "pygobject3"
   depends_on "pyqt@5"
-  depends_on "python@3.9"
+  depends_on "python@3.10"
   depends_on "qt@5"
   depends_on "qwt-qt5"
   depends_on "six"
@@ -96,18 +97,27 @@ class Gnuradio < Formula
     sha256 "7f91197cc9e48f989d12e4e6fbc46495c446636dfc81b9ccf50bb0ec74b91d4b"
   end
 
-  # Fix upstreamed here: https://github.com/gnuradio/gnuradio/pull/6002.
+  # Fix build with newer GCC
+  # https://github.com/gnuradio/gnuradio/pull/6002.
   patch :DATA
 
+  # Fix build with fmt 9+
+  # https://github.com/gnuradio/gnuradio/pull/6053
+  patch do
+    url "https://github.com/gnuradio/gnuradio/commit/e63ee41fd455cdd39ae983c258d8632c3ea57fc6.patch?full_index=1"
+    sha256 "be4373f13ffe8ae8ddc7216eb2b7ddb436b7be345cc0e108ae60b5010935a859"
+  end
+
   def install
+    python = "python3.10"
     ENV.cxx11
 
     ENV["XML_CATALOG_FILES"] = etc/"xml/catalog"
 
     venv_root = libexec/"venv"
-    xy = Language::Python.major_minor_version "python3"
-    ENV.prepend_create_path "PYTHONPATH", "#{venv_root}/lib/python#{xy}/site-packages"
-    venv = virtualenv_create(venv_root, "python3")
+    site_packages = Language::Python.site_packages(python)
+    ENV.prepend_create_path "PYTHONPATH", venv_root/site_packages
+    venv = virtualenv_create(venv_root, python)
     venv.pip_install resources
 
     # Avoid references to the Homebrew shims directory
@@ -120,10 +130,10 @@ class Gnuradio < Formula
     qwt_lib = OS.mac? ? qwt/"qwt.framework/qwt" : qwt/"libqwt.so"
     qwt_include = OS.mac? ? qwt/"qwt.framework/Headers" : Formula["qwt-qt5"].opt_include
 
-    args = std_cmake_args + %W[
+    args = %W[
       -DGR_PKG_CONF_DIR=#{etc}/gnuradio/conf.d
       -DGR_PREFSDIR=#{etc}/gnuradio/conf.d
-      -DGR_PYTHON_DIR=#{lib}/python#{xy}/site-packages
+      -DGR_PYTHON_DIR=#{prefix/site_packages}
       -DENABLE_DEFAULT=OFF
       -DPYTHON_EXECUTABLE=#{venv_root}/bin/python
       -DPYTHON_VERSION_MAJOR=3
@@ -143,14 +153,9 @@ class Gnuradio < Formula
       args << "-DENABLE_#{c}=ON"
     end
 
-    mkdir "build" do
-      system "cmake", "..", *args
-      system "make"
-      system "make", "install"
-    end
-
-    mv Dir[lib/"python#{xy}/dist-packages/*"], lib/"python#{xy}/site-packages/"
-    rm_rf lib/"python#{xy}/dist-packages"
+    system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
+    system "cmake", "--build", "build"
+    system "cmake", "--install", "build"
 
     # Create a directory for Homebrew to put .pth files pointing to GNU Radio
     # plugins installed by other packages. An automatically-loaded module adds
@@ -158,15 +163,14 @@ class Gnuradio < Formula
     plugin_pth_dir = etc/"gnuradio/plugins.d"
     mkdir plugin_pth_dir
 
-    site_packages = lib/"python#{xy}/site-packages"
-    venv_site_packages = venv_root/"lib/python#{xy}/site-packages"
+    venv_site_packages = venv_root/site_packages
 
     (venv_site_packages/"homebrew_gr_plugins.py").write <<~EOS
       import site
       site.addsitedir("#{plugin_pth_dir}")
     EOS
 
-    pth_contents = "#{site_packages}\nimport homebrew_gr_plugins\n"
+    pth_contents = "#{prefix/site_packages}\nimport homebrew_gr_plugins\n"
     (venv_site_packages/"homebrew-gnuradio.pth").write pth_contents
 
     # Patch the grc config to change the search directory for blocks
@@ -242,7 +246,7 @@ class Gnuradio < Formula
 
       main()
     EOS
-    system Formula["python@3.9"].opt_bin/"python3", testpath/"test.py"
+    system Formula["python@3.10"].opt_bin/"python3.10", testpath/"test.py"
   end
 end
 

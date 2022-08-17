@@ -1,18 +1,18 @@
 class Numpy < Formula
   desc "Package for scientific computing with Python"
   homepage "https://www.numpy.org/"
-  url "https://files.pythonhosted.org/packages/13/b1/0c22aa7ca1deda4915cdec9562f839546bb252eecf6ad596eaec0592bd35/numpy-1.23.1.tar.gz"
-  sha256 "d748ef349bfef2e1194b59da37ed5a29c19ea8d7e6342019921ba2ba4fd8b624"
+  url "https://files.pythonhosted.org/packages/f4/66/17b8e95770478436bf968353c89683ce6f9e14d92e0d4fb3111c09ba18d2/numpy-1.23.2.tar.gz"
+  sha256 "b78d00e48261fbbd04aa0d7427cf78d18401ee0abd89c7559bbf422e5b1c7d01"
   license "BSD-3-Clause"
   head "https://github.com/numpy/numpy.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any, arm64_monterey: "bc1fff7aebd0e4e1950919047fa68cbae0d9944ff5c64c926787dfdb74853115"
-    sha256 cellar: :any, arm64_big_sur:  "db39ac8b4f587d356a0c697cdddf1e519a64e233481db6a763c675575140fde9"
-    sha256 cellar: :any, monterey:       "5673d5eb3550d1f2d6cf9cdfd8d05b86d54c601855e25626e79cf080547ad365"
-    sha256 cellar: :any, big_sur:        "c7374d6e1867dc1530755c670fc5a1c75c1d96fe20474bdec723c74c7a11e88c"
-    sha256 cellar: :any, catalina:       "06996c0a0b43293a955e8dca3b4df1b7ea7bf5739609f9b104e56abcfa842bf9"
-    sha256               x86_64_linux:   "05eacb0876be91f257348a96fb3c94c9b3d33a5a65c7c372953f9a822d8d8f7f"
+    sha256 cellar: :any, arm64_monterey: "b284ff6aa538939f427dc6a50c70d8c454e85ba3fe9889f1a4acafd53cf23c71"
+    sha256 cellar: :any, arm64_big_sur:  "f66822d74874b3614ea0ba65861a7f75edc1e22468c89440aeef0644319f1dac"
+    sha256 cellar: :any, monterey:       "8015542dac17e451d03eb099a7ff619495cb401114f27a8a0a617cf01dc0306f"
+    sha256 cellar: :any, big_sur:        "b502b26f761b905efd9b2eaa385dcdbe43f1756a92935fb7b9146cb61bf61e5c"
+    sha256 cellar: :any, catalina:       "97f68914c19ea4027394df979520ddc82c191079ee45d3760b98f18f035ec961"
+    sha256               x86_64_linux:   "b8e2df7a9019f0c286c373a805f7e6e4111d6576637a6100d2a9eb8e6a6f46b3"
   end
 
   depends_on "gcc" => :build # for gfortran
@@ -25,10 +25,9 @@ class Numpy < Formula
 
   def pythons
     deps.map(&:to_formula)
-        .select { |f| f.name.match?(/python@\d\.\d+/) }
+        .select { |f| f.name.match?(/^python@\d\.\d+$/) }
         .sort_by(&:version) # so that `bin/f2py` and `bin/f2py3` use python3.10
-        .map(&:opt_bin)
-        .map { |bin| bin/"python3" }
+        .map { |f| f.opt_libexec/"bin/python" }
   end
 
   def install
@@ -51,8 +50,7 @@ class Numpy < Formula
 
       system python, "setup.py", "build", "--fcompiler=#{Formula["gcc"].opt_bin}/gfortran",
                                           "--parallel=#{ENV.make_jobs}"
-      system python, *Language::Python.setup_install_args(prefix),
-                     "--install-lib=#{prefix/site_packages}"
+      system python, *Language::Python.setup_install_args(prefix, python)
     end
   end
 

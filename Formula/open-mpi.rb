@@ -4,6 +4,7 @@ class OpenMpi < Formula
   url "https://download.open-mpi.org/release/open-mpi/v4.1/openmpi-4.1.4.tar.bz2"
   sha256 "92912e175fd1234368c8730c03f4996fe5942e7479bb1d10059405e7f2b3930d"
   license "BSD-3-Clause"
+  revision 1
 
   livecheck do
     url :homepage
@@ -11,12 +12,13 @@ class OpenMpi < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "c6c7bbcc4c1cb911ad45332765571daf6d7dbbd3ecad24d8143ee3648fb98299"
-    sha256 arm64_big_sur:  "106128677431abf6253682f754e24bd4b9b20047acded6f16027c530720c11d3"
-    sha256 monterey:       "dea48c72da25568d64895b92d338dca17bf98945beca0a7ee38d4c1a20ffac75"
-    sha256 big_sur:        "009c7c3922114e87c9579cf5481da1020ac5ab7c4e2c1534067acd8bdf3e3fd7"
-    sha256 catalina:       "d83d61116fa13f540aba9da95985b9f61a76e9b835c3838cdee3f6d9b79a1106"
-    sha256 x86_64_linux:   "8f98a0c30dcfb168233634311fefb8f9cf16b5a8b84b7d264ef0e24192852ffa"
+    rebuild 1
+    sha256 arm64_monterey: "a2d31ec8594e73c2c4a1bba865d8e81c610b0ff01f039f96efefe0317535d339"
+    sha256 arm64_big_sur:  "7ff7d8a4ea8395d2601bf72ad17ea422fa326325c38a47dd572add58ca36cbf8"
+    sha256 monterey:       "0af78dd3d07df75329c6ba30a9fccf16d6cf7e4a9eb5d8f2af3b892496df47d2"
+    sha256 big_sur:        "e6c45885f7dbbe4a8e112c493293976d7dc67739dd6c5fa7511413fc1210ac23"
+    sha256 catalina:       "ca1c09fd3cf0b9fee16b1d31759e1c0a3ad9b964b4165354f22c51606059306a"
+    sha256 x86_64_linux:   "6858cb1171181e721a6b8f2d9fb9d43eaae2c8fef7ebc5b6076f133484332485"
   end
 
   head do
@@ -53,25 +55,24 @@ class OpenMpi < Formula
     ENV.runtime_cpu_detection
 
     args = %W[
-      --prefix=#{prefix}
-      --disable-dependency-tracking
       --disable-silent-rules
       --enable-ipv6
       --enable-mca-no-build=reachable-netlink
+      --sysconfdir=#{etc}
       --with-libevent=#{Formula["libevent"].opt_prefix}
       --with-sge
     ]
     args << "--with-platform-optimized" if build.head?
 
     system "./autogen.pl", "--force" if build.head?
-    system "./configure", *args
+    system "./configure", *std_configure_args, *args
     system "make", "all"
     system "make", "check"
     system "make", "install"
 
     # Fortran bindings install stray `.mod` files (Fortran modules) in `lib`
     # that need to be moved to `include`.
-    include.install Dir["#{lib}/*.mod"]
+    include.install lib.glob("*.mod")
   end
 
   test do

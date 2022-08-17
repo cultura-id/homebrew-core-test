@@ -1,10 +1,9 @@
 class ScummvmTools < Formula
   desc "Collection of tools for ScummVM"
   homepage "https://www.scummvm.org/"
-  url "https://downloads.scummvm.org/frs/scummvm-tools/2.5.0/scummvm-tools-2.5.0.tar.xz"
-  sha256 "5cdc8173e1ee3fb74d62834e79995be0c5b1d999f72a0a125fab611222f927da"
-  license "GPL-2.0-or-later"
-  revision 2
+  url "https://downloads.scummvm.org/frs/scummvm-tools/2.6.0/scummvm-tools-2.6.0.tar.xz"
+  sha256 "9daf3ff8b26e3eb3d2215ea0416e78dc912b7ec21620cc496657225ea8a90428"
+  license "GPL-3.0-or-later"
   head "https://github.com/scummvm/scummvm-tools.git", branch: "master"
 
   livecheck do
@@ -13,12 +12,12 @@ class ScummvmTools < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "25802720d5990ecf69ef61dfdfba57dd7a2c017a91ce31eb85dbb55cc0e86216"
-    sha256 cellar: :any,                 arm64_big_sur:  "46153393342ac8d4b9ebffaa30bf404c2d2a04228fd0303a8aada5bb2d84286d"
-    sha256 cellar: :any,                 monterey:       "c328946d81f8025c6240e0e75b18369d9475ecafa4349d6781547dc51e96586c"
-    sha256 cellar: :any,                 big_sur:        "35772d6de4633c6fbfeaed8e800fdc188591dda5dc28f9a960d91c1e43094bee"
-    sha256 cellar: :any,                 catalina:       "bcc9754b82e993b53eeca37efa6351d54593de0e2204cde353fa5df52bcd24b5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e20689e030d11aed9c77ec9df02beb39547ec8b5f9dfe97791ecc7ab3f59af01"
+    sha256 cellar: :any,                 arm64_monterey: "499de191275bbf936f8d9e246976e6188b1ce9d52f564af3f5c6c9777d632589"
+    sha256 cellar: :any,                 arm64_big_sur:  "fbd80c2985dfb8755de5ad94f4933f025f7efb1ba511e0415e26c3c8ee80c595"
+    sha256 cellar: :any,                 monterey:       "e55b51da1a0452c6d55952961e3751ce71ec09fda9f19183f3f166a3463c0822"
+    sha256 cellar: :any,                 big_sur:        "21028952a2a0b56a2a03b7b7d547a454d8659ee2caf0653b97da2f1d483ae15a"
+    sha256 cellar: :any,                 catalina:       "ff34a6f37530ec0d77ba18dbcd9cf0cc4f4fd96e467a3acdd3db0c360a94419a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7e81d861d2d5381e0755b683d50412d905fd7bd4e124cd146cba0c4e6f74bfc1"
   end
 
   depends_on "boost"
@@ -27,7 +26,7 @@ class ScummvmTools < Formula
   depends_on "libpng"
   depends_on "libvorbis"
   depends_on "mad"
-  depends_on "wxwidgets@3.0"
+  depends_on "wxwidgets"
 
   def install
     # configure will happily carry on even if it can't find wxwidgets,
@@ -47,6 +46,6 @@ class ScummvmTools < Formula
   end
 
   test do
-    system "#{bin}/scummvm-tools-cli", "--list"
+    system bin/"scummvm-tools-cli", "--list"
   end
 end

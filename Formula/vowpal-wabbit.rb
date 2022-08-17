@@ -1,19 +1,19 @@
 class VowpalWabbit < Formula
   desc "Online learning algorithm"
   homepage "https://github.com/VowpalWabbit/vowpal_wabbit"
-  url "https://github.com/VowpalWabbit/vowpal_wabbit/archive/9.2.0.tar.gz"
-  sha256 "d2d8fec8750abf0b379a52c92113fdd6719d827a26ed101c2f7b863ae95db1d1"
+  url "https://github.com/VowpalWabbit/vowpal_wabbit/archive/9.3.0.tar.gz"
+  sha256 "e7ffda2782bb2f0bdf8235db3e9655c71e005d762cab0fa19d260fe672c6104b"
   license "BSD-3-Clause"
+  revision 1
   head "https://github.com/VowpalWabbit/vowpal_wabbit.git", branch: "master"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_monterey: "7e0858e6b53d0b25536a3bc857fdf00f0317e5a8179111ab0247f065f10811f6"
-    sha256 cellar: :any,                 arm64_big_sur:  "8f90ec88b63e37b8da2ce918deee12d6f0d337ed697662047d9103922e656c74"
-    sha256 cellar: :any,                 monterey:       "4152befa657dcbe83ed0c8f9c637d31b2076fa06fa78021fb707ae35f2af4dce"
-    sha256 cellar: :any,                 big_sur:        "93fc488d259f0a57d46fa9855311392e4ad8a33573b98836b6b9fdd4941084c3"
-    sha256 cellar: :any,                 catalina:       "4b0f0829389881234f411a211061cc6cb94427329d7fcb8a77affbe653f97267"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6f520da5b866fb1fa1d0446f85fc09e9ac124ae4e02f42e6a74b116b5e2f4c4b"
+    sha256 cellar: :any,                 arm64_monterey: "241fe74a777038f526574f77b5ee4831bf99887754ac64d8b94ff72d84fcb794"
+    sha256 cellar: :any,                 arm64_big_sur:  "906cb60ce5345580bbaa4fe7d1f6cd2c6e00c0fe61c0765a86a1da60350d737c"
+    sha256 cellar: :any,                 monterey:       "723111b1d9b0612aae4a0c767af1724818b3263f2e25cc14dfbff94f6b5fb961"
+    sha256 cellar: :any,                 big_sur:        "fe623957af3531a96cbccbafc90fae4e6cf8c6e261f14b1e7fcbc16a03e54b42"
+    sha256 cellar: :any,                 catalina:       "0e86f538866d89810a1bc4eb02ee92d5e805d0fdd9afa21c2d9d6c6428725029"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "23a0d63e513a43b45f38d6a87f13c409af3ac74108fff1e86aa44d1799db3dfe"
   end
 
   depends_on "cmake" => :build

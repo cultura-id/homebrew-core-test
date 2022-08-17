@@ -4,22 +4,20 @@ class Chapel < Formula
   url "https://github.com/chapel-lang/chapel/releases/download/1.27.0/chapel-1.27.0.tar.gz"
   sha256 "558b1376fb7757a5e1f254c717953f598a3e89850c8edd1936b8d09c464f3e8b"
   license "Apache-2.0"
+  revision 2
+  head "https://github.com/chapel-lang/chapel.git", branch: "main"
 
   bottle do
-    sha256 arm64_monterey: "47e7d368c685aed62e699dbb9e87a881ab7d6a65873425b10d83d58458b62557"
-    sha256 arm64_big_sur:  "632ea42631efaed6c650d311b8dbfa4b643869f55699192b4bb600b77d37079d"
-    sha256 monterey:       "2863cfb4bc1082fba46a7c24a01db3a63abb2d6902ac1d5876fba13289b63eb4"
-    sha256 big_sur:        "67f5179a97496c53649f6a851256246d419262aee7d0fdbdf734a380de1023b2"
-    sha256 catalina:       "85a12fe66532bb5bcb31714054b7c081613886198fa4cc7bb8736053beb20c37"
-    sha256 x86_64_linux:   "953787b24c4237de21e019d663bb779374968c878ffc08e72291c2f72afb8c6b"
+    sha256 arm64_monterey: "8bbe059caaf4f0ecf94d21e474027d5c12cdd66eeca0e733ff3227e3817cd63e"
+    sha256 arm64_big_sur:  "0891b258dbb9eb380278dffcf5bb635c23b70a0860bf2a6e7ddfeca11da77f4f"
+    sha256 monterey:       "070d13b86167a2a6a0e919a87771825280a4ccd50c38a4ebebaef40d88966911"
+    sha256 big_sur:        "6af85521fa09d3b0b0617be98fb94634f053f03f4cea4538b610df8b0d3c5377"
+    sha256 catalina:       "68dbcbb43aea0214677cb895bd15b683ad5ad4b8f28cb0ded08aee88c3e1d94e"
+    sha256 x86_64_linux:   "e6119c8d727fa60b20c7cd7c1dc3502aa4a440a4db074026906850a1e5ae80fd"
   end
 
   depends_on "gmp"
-  # `chapel` scripts use python on PATH (e.g. checking `command -v python3`),
-  # so it needs to depend on the currently linked Homebrew Python version.
-  # TODO: remove from versioned_dependencies_conflicts_allowlist when
-  # when Python dependency matches LLVM's Python for all OS versions.
-  depends_on "python@3.9"
+  depends_on "python@3.10"
 
   # fatal error: cannot open file './sys_basic.h': No such file or directory
   # Issue ref: https://github.com/Homebrew/homebrew-core/issues/96915
@@ -45,6 +43,10 @@ class Chapel < Formula
   end
 
   def install
+    # Always detect Python used as dependency rather than needing aliased Python formula
+    python = "python3.10"
+    inreplace "util/config/find-python.sh", /^(for cmd in )(python3 )/, "\\1#{python} \\2"
+
     libexec.install Dir["*"]
     # Chapel uses this ENV to work out where to install.
     ENV["CHPL_HOME"] = libexec
@@ -53,18 +55,18 @@ class Chapel < Formula
     #   https://github.com/llvm/llvm-project/issues/54438
     ENV["CHPL_HOST_USE_SYSTEM_LIBCXX"] = "yes"
 
+    # don't try to set CHPL_LLVM_GCC_PREFIX since the llvm
+    # package should be configured to use a reasonable GCC
+    (libexec/"chplconfig").write <<~EOS
+      CHPL_RE2=bundled
+      CHPL_GMP=system
+      CHPL_LLVM_CONFIG=#{llvm.opt_bin}/llvm-config
+      CHPL_LLVM_GCC_PREFIX=none
+    EOS
+
     # Must be built from within CHPL_HOME to prevent build bugs.
     # https://github.com/Homebrew/legacy-homebrew/pull/35166
     cd libexec do
-      # don't try to set CHPL_LLVM_GCC_PREFIX since the llvm@13
-      # package should be configured to use a reasonable GCC
-      (libexec/"chplconfig").write <<~EOS
-        CHPL_RE2=bundled
-        CHPL_GMP=system
-        CHPL_LLVM_CONFIG=#{llvm.opt_bin}/llvm-config
-        CHPL_LLVM_GCC_PREFIX=none
-      EOS
-
       system "./util/printchplenv", "--all"
       with_env(CHPL_PIP_FROM_SOURCE: "1") do
         system "make", "test-venv"

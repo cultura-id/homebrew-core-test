@@ -1,18 +1,18 @@
 class Fbthrift < Formula
   desc "Facebook's branch of Apache Thrift, including a new C++ server"
   homepage "https://github.com/facebook/fbthrift"
-  url "https://github.com/facebook/fbthrift/archive/v2022.07.04.00.tar.gz"
-  sha256 "45e7ffb38655d9b518d28066f4276000a298990c7c32b9460ddb7a37f2af78bd"
+  url "https://github.com/facebook/fbthrift/archive/v2022.08.15.00.tar.gz"
+  sha256 "511734c1371d5ac2a7d05d50dde77cc04bd6b80ea824bcfbf065c9b298c24936"
   license "Apache-2.0"
   head "https://github.com/facebook/fbthrift.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "81a2529451702e153f85a85d4051389db175843421cef5b9622eeb03721634e9"
-    sha256 cellar: :any,                 arm64_big_sur:  "3094356a0f438c1bd9ddd03543a92cde821e39eafd5ad0355fc538dd79e42ea2"
-    sha256 cellar: :any,                 monterey:       "e673bed28d433e918dc372d41465284470e8cdaae5ae9d825c4f86011f53474f"
-    sha256 cellar: :any,                 big_sur:        "39ebb577f1a842570337d176bf693ab2801530a5a613a1e9b4cba57fb2e9797b"
-    sha256 cellar: :any,                 catalina:       "c0329e2f2bbcfbe65d6a26ea63a668fe81776a56e28796702b3c6c6a0d49c577"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "26c88cd29215c2434c0b27f266c646dd9212c985c1e907cab109c7605bf63055"
+    sha256 cellar: :any,                 arm64_monterey: "7002067d84fb2ac62de34e3150b28b1df0206ba24df1e6aaf68efa37f7942856"
+    sha256 cellar: :any,                 arm64_big_sur:  "ef892fe2a2d690e387035b5ec5817001d88716153caeed8dd7d4afa0761849b5"
+    sha256 cellar: :any,                 monterey:       "ac17f72ffb683bb25c67eef3f6cdc13a5c22bbaee82323551d2755db89766c37"
+    sha256 cellar: :any,                 big_sur:        "1247764e92a92ccb087c432a3458ee925310cf7f363655c163173ad716f7d215"
+    sha256 cellar: :any,                 catalina:       "1dcdf86bab000818aa40691d7713c0245c7878ac1d57223066208cfec09acb4c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "04a202a2fead93efca7defe56576a7292d91d47d0c0b3df4d450aac41fccd664"
   end
 
   depends_on "bison" => :build # Needs Bison 3.1+
@@ -46,6 +46,13 @@ class Fbthrift < Formula
   end
 
   fails_with gcc: "5" # C++ 17
+
+  # Fix missing `#include`. Can likely be removed in the next release.
+  # https://github.com/facebook/fbthrift/pull/513
+  patch do
+    url "https://github.com/facebook/fbthrift/commit/cda0b24feb1cb93e177473ec6ca2e4714c14c931.patch?full_index=1"
+    sha256 "ff03957befef34ee90270dd81b3bdff4dadc1aa0bd0a0d618882dc1a17dc7edc"
+  end
 
   def install
     ENV.llvm_clang if OS.mac? && (DevelopmentTools.clang_build_version <= 1100)

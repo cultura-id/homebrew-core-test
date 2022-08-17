@@ -5,6 +5,7 @@ class LlvmAT13 < Formula
   sha256 "326335a830f2e32d06d0a36393b5455d17dc73e0bd1211065227ee014f92cbf8"
   # The LLVM Project is under the Apache License v2.0 with LLVM Exceptions
   license "Apache-2.0" => { with: "LLVM-exception" }
+  revision 1
 
   # This should be removed when LLVM 15 is released, so we only check the
   # current version (the `llvm` formula) and one major version before it
@@ -15,12 +16,12 @@ class LlvmAT13 < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "0871109ada8b7b50a210dabb9f354e922ea73b087678cd06849268f1f5cfee71"
-    sha256 cellar: :any,                 arm64_big_sur:  "f7231cd86d1ec1f3bfebc586d793565b395fea673287cd62de05212b03972e7d"
-    sha256 cellar: :any,                 monterey:       "60ac0ca7260352e807e08591b29423c915971f0e7f1e8532af25b8986848466f"
-    sha256 cellar: :any,                 big_sur:        "6089883fc0032bef65d597648758f12c7497e62400f66cecb363be2eb93407a1"
-    sha256 cellar: :any,                 catalina:       "bfae7889794444e19c8cca3d1da40a6461c86a0defa8c3378f87932a05fc72bb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "139453f124f5e88c575bfc0fdf9c3582ccbc074e5ffb8750d07b34f1492b98b3"
+    sha256 cellar: :any,                 arm64_monterey: "b480466716f06633140ddadb009d774b0998e99eaa0fdba68d1f2b7863d5da3b"
+    sha256 cellar: :any,                 arm64_big_sur:  "51aa0ba0cd01aed95eff270131ee2d43fe903a9dba74ca26be72a6ae2a39e72c"
+    sha256 cellar: :any,                 monterey:       "d4495985af28aaed17424584ec2b4c1e83fd49c9be1b96554803963211bf6489"
+    sha256 cellar: :any,                 big_sur:        "3ca38a010801868bc967d9ae7756fca259dcc5a01af227823e659f3ecbefe5eb"
+    sha256 cellar: :any,                 catalina:       "feb0677067a551fbdc96181ef6f6414baac7d259a7a4d43f46149589002160a3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e90cdf9451430b7939de6416c200590cba946f55ba6d97dd17d67ee08a403b68"
   end
 
   # Clang cannot find system headers if Xcode CLT is not installed
@@ -32,8 +33,8 @@ class LlvmAT13 < Formula
   # We intentionally use Make instead of Ninja.
   # See: Homebrew/homebrew-core/issues/35513
   depends_on "cmake" => :build
+  depends_on "python@3.10" => :build
   depends_on "swig" => :build
-  depends_on "python@3.10"
 
   uses_from_macos "libedit"
   uses_from_macos "libffi", since: :catalina
@@ -45,19 +46,14 @@ class LlvmAT13 < Formula
     depends_on "pkg-config" => :build
     depends_on "binutils" # needed for gold
     depends_on "elfutils" # openmp requires <gelf.h>
-    depends_on "gcc"
     depends_on "glibc" if Formula["glibc"].any_version_installed?
   end
-
-  # Fails at building LLDB
-  fails_with gcc: "5"
 
   def install
     projects = %w[
       clang
       clang-tools-extra
       lld
-      lldb
       mlir
       polly
     ]
@@ -88,9 +84,6 @@ class LlvmAT13 < Formula
     # can almost be treated as an entirely different build from llvm.
     ENV.permit_arch_flags
 
-    # we install the lldb Python module into libexec to prevent users from
-    # accidentally importing it with a non-Homebrew Python or a Homebrew Python
-    # in a non-default prefix. See https://lldb.llvm.org/resources/caveats.html
     args = %W[
       -DLLVM_ENABLE_PROJECTS=#{projects.join(";")}
       -DLLVM_ENABLE_RUNTIMES=#{runtimes.join(";")}
@@ -106,12 +99,6 @@ class LlvmAT13 < Formula
       -DLLVM_ENABLE_Z3_SOLVER=OFF
       -DLLVM_OPTIMIZED_TABLEGEN=ON
       -DLLVM_TARGETS_TO_BUILD=all
-      -DLLDB_USE_SYSTEM_DEBUGSERVER=ON
-      -DLLDB_ENABLE_PYTHON=ON
-      -DLLDB_ENABLE_LUA=OFF
-      -DLLDB_ENABLE_LZMA=ON
-      -DLLDB_PYTHON_RELATIVE_PATH=libexec/#{site_packages}
-      -DLLDB_PYTHON_EXE_RELATIVE_PATH=#{which("python3").relative_path_from(prefix)}
       -DLIBOMP_INSTALL_ALIASES=OFF
       -DCLANG_PYTHON_BINDINGS_VERSIONS=#{python_versions.join(";")}
       -DLLVM_CREATE_XCODE_TOOLCHAIN=OFF
@@ -212,7 +199,7 @@ class LlvmAT13 < Formula
       #   2. requiring an existing Xcode installation
       xctoolchain = prefix/"Toolchains/LLVM#{version}.xctoolchain"
       xcode_version = MacOS::Xcode.installed? ? MacOS::Xcode.version : Version.new(MacOS::Xcode.latest_version)
-      compat_version = xcode_version < 8 ? "1" : "2"
+      compat_version = (xcode_version < 8) ? "1" : "2"
 
       system "/usr/libexec/PlistBuddy", "-c", "Add:CFBundleIdentifier string org.llvm.#{version}", "Info.plist"
       system "/usr/libexec/PlistBuddy", "-c", "Add:CompatibilityVersion integer #{compat_version}", "Info.plist"
@@ -427,7 +414,7 @@ class LlvmAT13 < Formula
         return 0;
       }
     EOS
-    assert_includes shell_output("#{bin}/scan-build clang++ scanbuildtest.cpp 2>&1"),
+    assert_includes shell_output("#{bin}/scan-build #{bin}/clang++ scanbuildtest.cpp 2>&1"),
       "warning: Use of memory after it is freed"
 
     (testpath/"clangformattest.c").write <<~EOS

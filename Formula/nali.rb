@@ -1,18 +1,18 @@
 class Nali < Formula
   desc "Tool for querying IP geographic information and CDN provider"
   homepage "https://github.com/zu1k/nali"
-  url "https://github.com/zu1k/nali/archive/v0.4.8.tar.gz"
-  sha256 "ce6a0be171839640634047f90fb40eafda17dd4439329df0caf110ce186bfc91"
+  url "https://github.com/zu1k/nali/archive/v0.5.3.tar.gz"
+  sha256 "e47c330bd66f6969b625571843451913f5667a25b2852e254ab028b3f3ed575b"
   license "MIT"
   head "https://github.com/zu1k/nali.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "5edd5c82696f352f3cb177cb4274b3f707ecf1e4a83185ecfc7dee6159de7d35"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "94792f753375d6eef98c1d460c44a8b021ff66d1dfd1557defcc16f0f07a27f4"
-    sha256 cellar: :any_skip_relocation, monterey:       "93c8879f6a626a36961c584049adf87890385dbe197975ebf501aaf86da6fc64"
-    sha256 cellar: :any_skip_relocation, big_sur:        "031cc8b4eba9d95bb4f32111a347f1f7ce7b4f555d9fcaf717d4f144a5c0512d"
-    sha256 cellar: :any_skip_relocation, catalina:       "a40d10c4700cfccb5b35b29809d9e7a552afedf764f1099677281ffd86690644"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "30ced4b8265010d06903d187db61e4a7d65ee2573161acbcc0ea6eb63431f6e3"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "14f512b35424185762a13b4530c21670019f13cec57d010c627c779115f4d4dd"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "2b75b5a25571a4bad4cb7222ecdf7414cb656ecb1f8a147bc6c69e38fb40ee80"
+    sha256 cellar: :any_skip_relocation, monterey:       "5727378720de8ee209ddb413d9431c1eae775f7ea6abf7588fb9341b7d665269"
+    sha256 cellar: :any_skip_relocation, big_sur:        "b5b5912bbad0cd1f51dc017ced4905e422b8408846424fe9bf1dbf4b5c34be2e"
+    sha256 cellar: :any_skip_relocation, catalina:       "0f35d78a2eeac2ff6c2cf27644ce093ba0ad2777251174525f6a31c01b2e4f9f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "669b5c4bbfebbc8570ff49c5b6b611cb1d426d2ff9d80bcaa70846588f83d9e6"
   end
 
   depends_on "go" => :build
@@ -28,7 +28,7 @@ class Nali < Formula
     ip = "1.1.1.1"
     # Default database used by program is in Chinese, while downloading an English one
     # requires an third-party account.
-    # This example reads "US APNIC&CloudFlare Public DNS Server".
-    assert_match "#{ip} [美国 APNIC&CloudFlare公共DNS服务器]", shell_output("#{bin}/nali #{ip}")
+    # This example reads "Australia APNIC/CloudFlare Public DNS Server".
+    assert_match "#{ip} [澳大利亚 APNIC/CloudFlare公共DNS服务器]", shell_output("#{bin}/nali #{ip}")
   end
 end

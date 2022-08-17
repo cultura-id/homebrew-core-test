@@ -1,18 +1,17 @@
 class Circumflex < Formula
   desc "Hacker News in your terminal"
   homepage "https://github.com/bensadeh/circumflex"
-  url "https://github.com/bensadeh/circumflex/archive/refs/tags/2.2.tar.gz"
-  sha256 "6a2467bf6bad00fb3fe3a7b9bdb4e6ea6d8a721b1c9905e6161324cfb3f34c01"
+  url "https://github.com/bensadeh/circumflex/archive/refs/tags/2.3.tar.gz"
+  sha256 "ba898331d76e266ae3af4e5eab5c6af30ef004c133104fec3e0bbb9497f5c70a"
   license "AGPL-3.0-only"
-  revision 1
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "16ca677cc0336d37cec75b9436f82315bb1cb48b8af0524bd68d157c6828b48d"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "035994e6fd161bd14934ae37ee28dc34d6f04a0eec2169d097a599a4169549d9"
-    sha256 cellar: :any_skip_relocation, monterey:       "d8eb020f8b63d4f58e1dbf9cb1bc8291f8674fcfbcef8f8368f44a5598afb728"
-    sha256 cellar: :any_skip_relocation, big_sur:        "17cbffe48e6937ae19330d2274b1ff084415cad1e9464ad993acbe1cd324cd74"
-    sha256 cellar: :any_skip_relocation, catalina:       "f57a7a6866f2bf7a715cfeb033fd6ab549b61b85a00eb02d1dd0cd24dbe3ae07"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f4300b5f392b98a629b9648ec2d61a11e7aabd9f74e69c059dcd4fb41a922641"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "b1ac00b284c272e8bee9a5ce9df02a1376ee27ebe2bf1b9cbdbb3fd8adf837dd"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "f42df2bbcafa3958ded1d4a28fa34b5f5eb8a087637510228dff42744eda9ab9"
+    sha256 cellar: :any_skip_relocation, monterey:       "6eebcb33d48b2b87b50d2470f22cedc4fbc0f6129763328369655252903795bb"
+    sha256 cellar: :any_skip_relocation, big_sur:        "f0c7deb6eb0dfa77ea5cf29af222adaadd197678ed1d90a827a144161eda1c94"
+    sha256 cellar: :any_skip_relocation, catalina:       "be676c2fa0e21111154ed2c2df5731923bb2934d249a315853639e1bf3562054"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2163d8979f2896efb2ebd22dd094d3ab362a392bed572bcf87b2cb99c1fffa73"
   end
 
   depends_on "go" => :build
@@ -22,6 +21,7 @@ class Circumflex < Formula
 
   def install
     system "go", "build", *std_go_args(output: bin/"clx", ldflags: "-s -w")
+    man1.install "share/man/clx.1"
   end
 
   test do

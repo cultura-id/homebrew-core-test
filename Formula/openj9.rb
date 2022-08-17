@@ -2,15 +2,14 @@ class Openj9 < Formula
   desc "High performance, scalable, Java virtual machine"
   homepage "https://www.eclipse.org/openj9/"
   url "https://github.com/eclipse-openj9/openj9.git",
-      tag:      "openj9-0.32.0",
-      revision: "9a84ec34ed321967cdbe67b29ddcd732b591d051"
+      tag:      "openj9-0.33.0",
+      revision: "04a55b45b3a0d75813335fda0fb8703819690ee7"
   license any_of: [
     "EPL-2.0",
     "Apache-2.0",
     { "GPL-2.0-only" => { with: "Classpath-exception-2.0" } },
     { "GPL-2.0-only" => { with: "OpenJDK-assembly-exception-1.0" } },
   ]
-  revision 1
 
   livecheck do
     url :stable
@@ -18,9 +17,9 @@ class Openj9 < Formula
   end
 
   bottle do
-    sha256 cellar: :any, monterey: "5f7cb14cc7461134638d67cec00e1205fe513f1025f64e645ae79751d2b5d3ed"
-    sha256 cellar: :any, big_sur:  "935b96b684bb116b7938d06e6ab37745827e08cdef95eb946abfdade1fe30194"
-    sha256 cellar: :any, catalina: "a41e04c0a95728a926f2e336cd33a5344453721aa84c80efc9f709be252e64e9"
+    sha256 cellar: :any, monterey: "91e773799afc5b762cae6c609e5318c9fb79b4ebbca265422cc97c4bcb5579fa"
+    sha256 cellar: :any, big_sur:  "651c441a9a0f350dbc5bffd11983ba6d633e246d7e9f0a0ff409904acd7ccc42"
+    sha256 cellar: :any, catalina: "492833a274e9da1f766dc13b25f3829632a4a9e8068a79eada3be1f267ba86e3"
   end
 
   keg_only :shadowed_by_macos
@@ -75,14 +74,14 @@ class Openj9 < Formula
 
   resource "omr" do
     url "https://github.com/eclipse-openj9/openj9-omr.git",
-        tag:      "openj9-0.32.0",
-        revision: "ab24b6666596140516d3f240486aa1c84a726775"
+        tag:      "openj9-0.33.0",
+        revision: "b58aa2708c095efadf522f67aaef9f7de2a7cbc7"
   end
 
   resource "openj9-openjdk-jdk" do
     url "https://github.com/ibmruntimes/openj9-openjdk-jdk17.git",
         branch:   "v0.32.0-release",
-        revision: "9a84ec34ed321967cdbe67b29ddcd732b591d051"
+        revision: "04a55b45b3a0d75813335fda0fb8703819690ee7"
   end
 
   def install

@@ -1,8 +1,8 @@
 class Root < Formula
   desc "Object oriented framework for large scale data analysis"
   homepage "https://root.cern.ch/"
-  url "https://root.cern.ch/download/root_v6.26.04.source.tar.gz"
-  sha256 "a271cf82782d6ed2c87ea5eef6681803f2e69e17b3036df9d863636e9358421e"
+  url "https://root.cern.ch/download/root_v6.26.06.source.tar.gz"
+  sha256 "b1f73c976a580a5c56c8c8a0152582a1dfc560b4dd80e1b7545237b65e6c89cb"
   license "LGPL-2.1-or-later"
   revision 1
   head "https://github.com/root-project/root.git", branch: "master"
@@ -16,12 +16,12 @@ class Root < Formula
   end
 
   bottle do
-    sha256 arm64_monterey: "40053cf5847fb77b9fa736d251c8e5c6b74941e924fe841f682533af9f3d391a"
-    sha256 arm64_big_sur:  "4a95cafcf0b6d231cee3a2a4c112d5e8d2818aff9a53cebbbdce929dcae57927"
-    sha256 monterey:       "22a22ca374e01af8d7dfc6d93915c031fcab047c831781a5326bff086b49e3ca"
-    sha256 big_sur:        "9f5d469b5c386d02d43b7fb5a1c544c1fd6939b9c022930025cb1c6835002069"
-    sha256 catalina:       "6de35167500657e1a193088a9ace296be68a639e17b046dedc929acf75e556cd"
-    sha256 x86_64_linux:   "ca415127a13260d08df53206780a66758d217aa6e2aafda84ec80d8c0fa8fdbe"
+    sha256 arm64_monterey: "3342f160ffce464e80c476495c3db713d51e0e7fe1741b6ec4a8dfc102206fe8"
+    sha256 arm64_big_sur:  "d70d636539b03c091233a81a74f3de23b0e9ed0d6fd7f8ee97e9df6b5c779393"
+    sha256 monterey:       "9604024d36babeaa07f5805c18b5fc65086ed2b2accbed28969a85fdbf8f7ee7"
+    sha256 big_sur:        "6bfc729920596fe19e0be9effa4e4bc68872299a5f88e0ba7696dcb032db7fcc"
+    sha256 catalina:       "f02a6372941aad78aaeebb41e3ddbf0551f09ea579a0cb411c6bca83f586a339"
+    sha256 x86_64_linux:   "23f78dc32e443689bbbe0ead39dab2825575772bb3a8dedc4df4fe2240aabb33"
   end
 
   depends_on "cmake" => :build
@@ -29,6 +29,7 @@ class Root < Formula
   depends_on "cfitsio"
   depends_on "davix"
   depends_on "fftw"
+  depends_on "freetype"
   depends_on "gcc" # for gfortran
   depends_on "gl2ps"
   depends_on "glew"
@@ -40,7 +41,7 @@ class Root < Formula
   depends_on "openblas"
   depends_on "openssl@1.1"
   depends_on "pcre"
-  depends_on "python@3.9"
+  depends_on "python@3.10"
   depends_on "sqlite"
   depends_on "tbb"
   depends_on :xcode
@@ -62,6 +63,8 @@ class Root < Formula
   fails_with gcc: "5"
 
   def install
+    python = Formula["python@3.10"].opt_bin/"python3.10"
+
     ENV.append "LDFLAGS", "-Wl,-rpath,#{lib}/root"
 
     inreplace "cmake/modules/SearchInstalledSoftware.cmake" do |s|
@@ -75,10 +78,10 @@ class Root < Formula
     args = std_cmake_args + %W[
       -DCLING_CXX_PATH=clang++
       -DCMAKE_INSTALL_ELISPDIR=#{elisp}
-      -DPYTHON_EXECUTABLE=#{Formula["python@3.9"].opt_bin}/python3
+      -DPYTHON_EXECUTABLE=#{python}
       -DCMAKE_CXX_STANDARD=17
       -Dbuiltin_cfitsio=OFF
-      -Dbuiltin_freetype=ON
+      -Dbuiltin_freetype=OFF
       -Dbuiltin_glew=OFF
       -Ddavix=ON
       -Dfftw3=ON
@@ -99,23 +102,19 @@ class Root < Formula
       -GNinja
     ]
 
-    # Homebrew now sets CMAKE_INSTALL_LIBDIR to /lib, which is incorrect
-    # for ROOT with gnuinstall, so we set it back here.
-    args << "-DCMAKE_INSTALL_LIBDIR=lib/root"
-
     # Workaround the shim directory being embedded into the output
     inreplace "build/unix/compiledata.sh", "`type -path $CXX`", ENV.cxx
 
-    mkdir "builddir" do
-      system "cmake", "..", *args
-      system "ninja", "install"
+    # Homebrew now sets CMAKE_INSTALL_LIBDIR to /lib, which is incorrect
+    # for ROOT with gnuinstall, so we set it back here.
+    system "cmake", "-S", ".", "-B", "builddir", *args, *std_cmake_args(install_libdir: "lib/root")
+    system "cmake", "--build", "builddir"
+    system "cmake", "--install", "builddir"
 
-      chmod 0755, Dir[bin/"*.*sh"]
+    chmod 0755, bin.glob("*.*sh")
 
-      version = Language::Python.major_minor_version Formula["python@3.9"].opt_bin/"python3"
-      pth_contents = "import site; site.addsitedir('#{lib}/root')\n"
-      (prefix/"lib/python#{version}/site-packages/homebrew-root.pth").write pth_contents
-    end
+    pth_contents = "import site; site.addsitedir('#{lib}/root')\n"
+    (prefix/Language::Python.site_packages(python)/"homebrew-root.pth").write pth_contents
   end
 
   def caveats
@@ -164,6 +163,6 @@ class Root < Formula
     assert_equal "Hello, world!\n", shell_output("./a.out")
 
     # Test Python module
-    system Formula["python@3.9"].opt_bin/"python3", "-c", "import ROOT; ROOT.gSystem.LoadAllLibraries()"
+    system Formula["python@3.10"].opt_bin/"python3.10", "-c", "import ROOT; ROOT.gSystem.LoadAllLibraries()"
   end
 end

@@ -1,26 +1,26 @@
-require "language/node"
-
 class Railway < Formula
   desc "Develop and deploy code with zero configuration"
   homepage "https://railway.app/"
-  url "https://registry.npmjs.org/@railway/cli/-/cli-1.8.4.tgz"
-  sha256 "b057db0b76df651e982f79928d9f1f8dd37c6fce91995e41c56bf8ea6559b11c"
+  url "https://github.com/railwayapp/cli/archive/refs/tags/v2.0.8.tar.gz"
+  sha256 "4dfc6869ee125127741ae5182163698d7072450eb1c37f173895a22273bfcdaa"
   license "MIT"
+  head "https://github.com/railwayapp/cli.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "1a4fa8e05f74aa696ee22ef23635a7830851faa96ac939faff170a5fe933cafe"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "1a4fa8e05f74aa696ee22ef23635a7830851faa96ac939faff170a5fe933cafe"
-    sha256 cellar: :any_skip_relocation, monterey:       "c013e74fcd18bf49f7b6c2df73c6c103239dfe0fd2bc690fd329b06a95684d4f"
-    sha256 cellar: :any_skip_relocation, big_sur:        "c013e74fcd18bf49f7b6c2df73c6c103239dfe0fd2bc690fd329b06a95684d4f"
-    sha256 cellar: :any_skip_relocation, catalina:       "c013e74fcd18bf49f7b6c2df73c6c103239dfe0fd2bc690fd329b06a95684d4f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5f82ce3fe592056a356c7ce02806fd4ed8666b4ea78fa876079bf492ab4e1bf4"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "ce563bf835a59c803af430125a1915b6b5d6da35aeb02ba589fbc3dea24ef3e4"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "ce563bf835a59c803af430125a1915b6b5d6da35aeb02ba589fbc3dea24ef3e4"
+    sha256 cellar: :any_skip_relocation, monterey:       "f37495f511e06d203b35e60f99f35f1344feb42345e5a418cd73c95e180289c7"
+    sha256 cellar: :any_skip_relocation, big_sur:        "f37495f511e06d203b35e60f99f35f1344feb42345e5a418cd73c95e180289c7"
+    sha256 cellar: :any_skip_relocation, catalina:       "f37495f511e06d203b35e60f99f35f1344feb42345e5a418cd73c95e180289c7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "34ff8aefb89cf39692d1908c5bb18735aa80a38a3a4dc7c312774915ea0bc42a"
   end
 
-  depends_on "node"
+  depends_on "go" => :build
 
   def install
-    system "npm", "install", *Language::Node.std_npm_install_args(libexec)
-    bin.install_symlink Dir["#{libexec}/bin/*"]
+    ENV["CGO_ENABLED"] = "0"
+    ldflags = "-s -w -X github.com/railwayapp/cli/constants.Version=#{version}"
+    system "go", "build", *std_go_args(ldflags: ldflags)
 
     # Install shell completions
     output = Utils.safe_popen_read(bin/"railway", "completion", "bash")

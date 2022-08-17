@@ -4,8 +4,8 @@ class Copilot < Formula
   desc "CLI tool for Amazon ECS and AWS Fargate"
   homepage "https://aws.github.io/copilot-cli/"
   url "https://github.com/aws/copilot-cli.git",
-      tag:      "v1.19.0",
-      revision: "33ee39e861e148867b7ecb62f6dc46d50ac5c5e4"
+      tag:      "v1.20.0",
+      revision: "39a6f80499215df85be7cca149abbec02a40950f"
   license "Apache-2.0"
   head "https://github.com/aws/copilot-cli.git", branch: "mainline"
 
@@ -15,12 +15,12 @@ class Copilot < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "2cf257437a7895ef97236848f03289b997f5c2f5b589b22f6dd1bddba575b1b7"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "b360c97972454aaa62c98ec75863854add42a7814faed534d3ff4c8546d923d3"
-    sha256 cellar: :any_skip_relocation, monterey:       "6e731790caff71838817b8bff770f4ca831abcce9d8d1a6a98f19694d787e707"
-    sha256 cellar: :any_skip_relocation, big_sur:        "e1392463ccecd465be08a2cf727cac6e6b44c5d2edbed88eedb882bced645312"
-    sha256 cellar: :any_skip_relocation, catalina:       "209089b3554dd9e3351833125bd421645af098882f76da834438377493aa2e3e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "843316a9165314f8505084e0372440f004f27d75a10b1a2c4e734231b32c19ac"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "73b63ce2bae95683ca94bfaad5314bd2e96cd8d62e8ddeb42e69e34011f1bbdc"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "a7fa9d1f6f4a303dd82f6573561e829f93e1f26ddbb081629ef7bb288c3f2f8e"
+    sha256 cellar: :any_skip_relocation, monterey:       "2953badaa098e88193bef2e1dc02d4aeedb3e17a8f3ad71222d53e0a17f1ceec"
+    sha256 cellar: :any_skip_relocation, big_sur:        "cc10c6835fdab7f1ab420ece19a850a989cdb3d0591e5da66fceef2c9ed706e3"
+    sha256 cellar: :any_skip_relocation, catalina:       "22f40d412c9afa644537695afadee95fe6fb473322bd5d17fecbed1f77ccd824"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8c18efd0dafca5d3441f0ccb6f8f7ae804985f9c7fb14464c1de98ae1c058bc3"
   end
 
   depends_on "go" => :build
@@ -46,9 +46,11 @@ class Copilot < Formula
   end
 
   test do
+    ENV["AWS_ACCESS_KEY_ID"] = "test"
+    ENV["AWS_SECRET_ACCESS_KEY"] = "test"
     begin
       _, stdout, wait_thr = Open3.popen2("AWS_REGION=eu-west-1 #{bin}/copilot init 2>&1")
-      assert_match "Note: It's best to run this command in the root of your Git repository.", stdout.gets("\n")
+      assert_match "Note: It's best to run this command in the root of your Git repository", stdout.gets("\n")
     ensure
       Process.kill 9, wait_thr.pid
     end

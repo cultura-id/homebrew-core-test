@@ -1,19 +1,20 @@
 class ApacheArrow < Formula
   desc "Columnar in-memory analytics layer designed to accelerate big data"
   homepage "https://arrow.apache.org/"
-  url "https://www.apache.org/dyn/closer.lua?path=arrow/arrow-8.0.1/apache-arrow-8.0.1.tar.gz"
-  mirror "https://archive.apache.org/dist/arrow/arrow-8.0.1/apache-arrow-8.0.1.tar.gz"
-  sha256 "82d46929f7574715551da21700f100b39f99c3c4d6790f26cac86d869d64e94e"
+  url "https://www.apache.org/dyn/closer.lua?path=arrow/arrow-9.0.0/apache-arrow-9.0.0.tar.gz"
+  mirror "https://archive.apache.org/dist/arrow/arrow-9.0.0/apache-arrow-9.0.0.tar.gz"
+  sha256 "a9a033f0a3490289998f458680d19579cf07911717ba65afde6cb80070f7a9b5"
   license "Apache-2.0"
+  revision 1
   head "https://github.com/apache/arrow.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_monterey: "236f3e3d792c5450549703d4baaffb4c272c10495ab5e28e00745e33dd5c8b9f"
-    sha256 cellar: :any,                 arm64_big_sur:  "4f410eb8437deb23972cc7c1afee02f589debed45c0e2cd70b5f30735a45a94a"
-    sha256 cellar: :any,                 monterey:       "b523d867a39dcd7bb1e6184bf542a7dbe2dcecdf4ce987413e0a4beaa86dcd67"
-    sha256 cellar: :any,                 big_sur:        "6c94f65c8985387ff46b26b2d0e6a2a3cf6ce2c34d264d2353580ba73c0fdc7e"
-    sha256 cellar: :any,                 catalina:       "1bb210d9cb9bbd851c1d0d51ad88ffc2516f35d87f4b3771b4d4313e65576a68"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "34c6809c6ecf836b59924fc4ea0f5677bdf17b0fd3cecbeba2cbd8e4f599fbbb"
+    sha256 cellar: :any,                 arm64_monterey: "675bdb42b4308c62dd1056d91001ac65f067e113af1d28710690e3e83ec627b1"
+    sha256 cellar: :any,                 arm64_big_sur:  "b945b8f87968cd0de97bcf0cc580e44d811d154f4233433d9222bbe0bfb161c2"
+    sha256 cellar: :any,                 monterey:       "dc5e96f97bb3b302a2093681d97d15a9fb6a72634dc14de65b14843767508d62"
+    sha256 cellar: :any,                 big_sur:        "d585365986b70606cbd7ecb73645b3e1e657bad8b7f0a7a8e0397f82e1ba2125"
+    sha256 cellar: :any,                 catalina:       "e8c85a7367051336338f220c9c1a9f07f391b88c3cc8ec7ce6dd46692c860d09"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3e9c1cf39650817b1ccb51c2af9de7c57f6ad4bebccb85d8e6afb9a7e08eedff"
   end
 
   depends_on "boost" => :build

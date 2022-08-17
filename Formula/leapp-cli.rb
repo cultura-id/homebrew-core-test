@@ -3,17 +3,17 @@ require "language/node"
 class LeappCli < Formula
   desc "Cloud credentials manager cli"
   homepage "https://github.com/noovolari/leapp"
-  url "https://registry.npmjs.org/@noovolari/leapp-cli/-/leapp-cli-0.1.15.tgz"
-  sha256 "408d06dfbf5291f6eda330dcfb6ab6c1f5e4f069f46a22aa3f5bab5808b4daea"
+  url "https://registry.npmjs.org/@noovolari/leapp-cli/-/leapp-cli-0.1.17.tgz"
+  sha256 "7ba69db4b1d16194fa3f7bdaff61f9fc0facad6644eef96b5dc18382714879d0"
   license "MPL-2.0"
 
   bottle do
-    sha256                               arm64_monterey: "fa76e24aed7da3f084585c75eefd0f8a0bed353af3fe33132f780bdfb11a5690"
-    sha256                               arm64_big_sur:  "b88501ffd2707219fb17ad2b2b6a85aadb9704f668449fa90eb6e051803e65fd"
-    sha256                               monterey:       "88e4b93484bfc687d1a39dd1df019d9d83147a611f76e1ca1bb17346a45e609d"
-    sha256                               big_sur:        "272674d4d72f9cccb475660f4eb86284bc2a8979dfb2ebe22b21406e31ef20a4"
-    sha256                               catalina:       "0f5ac650baca5b1719aea5b4b1c45e45866b5870ebae34a39b62edcc5e5dff1e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e128d28688834ccea232695b4d748a55c46dc1d0bb4bb66871f09210fce7a79f"
+    sha256                               arm64_monterey: "a28aa67729bc53e838a85ce1a23591ffd3aea60e882dc93446b20be4a5bf6837"
+    sha256                               arm64_big_sur:  "bcce07d1543e6d6d143c869babeb7184e2cb6a9ed963aef253528d1da82f20a4"
+    sha256                               monterey:       "fc9aae68b88a9c45531c659d085cb7e0b8996dbba5767bf60e74419bd09ec5fa"
+    sha256                               big_sur:        "354055668201579246f558b54923aa2a05409be126e11a99bc7e3413e7b72bb8"
+    sha256                               catalina:       "f4ecd20d0b82f0254474ce36916a06c44c3ac246e90a2bca469f948749ad40d3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2a5a024aea5644ad2a5b41e93e7ba0479e405f973b0ddd37b6e3c62a0ca0a890"
   end
 
   depends_on "pkg-config" => :build

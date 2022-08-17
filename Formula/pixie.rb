@@ -2,18 +2,23 @@ class Pixie < Formula
   desc "Observability tool for Kubernetes applications"
   homepage "https://px.dev/"
   url "https://github.com/pixie-io/pixie.git",
-      tag:      "release/cli/v0.7.16",
-      revision: "131962699cf7581f4ed73b643c37517db8f4d777"
+      tag:      "release/cli/v0.7.17",
+      revision: "2f3f26c6bc929992744f303988ffdf99e998611f"
   license "Apache-2.0"
   head "https://github.com/pixie-io/pixie.git", branch: "main"
 
+  livecheck do
+    url :stable
+    regex(%r{^release/cli/v?(\d+(?:\.\d+)+)$}i)
+  end
+
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "80f58755f02ed012985c1db5726b2b6e1be5f677a5f627ff5b84c2b066cf673e"
-    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "84adb750cc62172404c0e36437e31c05398dd5d78b068a450469302212daba9b"
-    sha256 cellar: :any_skip_relocation, monterey:       "64b5b14ca3034d6725b2f8a7421bf786acd0f48e8b44ebb6d60af5774ca61b9b"
-    sha256 cellar: :any_skip_relocation, big_sur:        "9c170934ceaffd7e561614545df95d25d33f59bed9225e35877b237445242932"
-    sha256 cellar: :any_skip_relocation, catalina:       "af6b19bfb02ae67305ce4ee4950f09d1237b5961d88aef57a3733ee00d6206d0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7e9a1152b89dc8a47005e908d1d67c4c22457448e939385ccab1e56f532cd478"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "e4e011905afa7d997e4629ebac4b698ad2609e6b7ebc24f26171aa64d2e19df8"
+    sha256 cellar: :any_skip_relocation, arm64_big_sur:  "b98312a2a6d3f5522b496672257548451f322b9583cc433e1b85ce3d2fc405bd"
+    sha256 cellar: :any_skip_relocation, monterey:       "1c8fa172c886f05f1ba1a7d4bd0e2dab27dfdd06f36c1e0f93643c663c86978e"
+    sha256 cellar: :any_skip_relocation, big_sur:        "a2dbf931849e6beb642a4f85ebfb4fd2361143ba02c3968313e10be45a90fd74"
+    sha256 cellar: :any_skip_relocation, catalina:       "ea72e3b8d962011c80ca5306406a5853fc35e1b03e133898fa9a6e254d738024"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "1ad51bcee7d3ccc95fb011a19c6a266488324940ef00a7a72a56bd1d5d427084"
   end
 
   depends_on "go" => :build
