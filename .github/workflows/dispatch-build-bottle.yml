@@ -115,7 +115,7 @@ jobs:
           if [ "$RUNNER_OS" = 'macOS' ]; then
             brew test-bot --only-setup
           else
-            docker exec ${{github.sha}} brew test-bot --only-setup
+            docker exec ${{github.sha}} bash -c "git -C "/home/linuxbrew/.linuxbrew/Homebrew/Library/Taps/homebrew/homebrew-core" remote set-url origin https://github.com/Homebrew/homebrew-core ; brew test-bot --only-setup"
           fi
 
       - name: Run brew test-bot --only-formulae --keep-old --only-json-tab --skip-online-checks --skip-dependents ${{github.event.inputs.formula}}
