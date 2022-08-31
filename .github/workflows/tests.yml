@@ -21,7 +21,6 @@ permissions:
 
 jobs:
   tap_syntax:
-    if: github.repository == 'Homebrew/homebrew-core'
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/homebrew/ubuntu16.04:master
@@ -36,8 +35,6 @@ jobs:
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@master
 
-      - run: brew test-bot --only-tap-syntax
-
       - run: brew test-bot --only-formulae-detect
         if: github.event_name == 'pull_request'
         id: formulae-detect
@@ -45,7 +42,7 @@ jobs:
   setup_tests:
     permissions:
       pull-requests: read
-    if: github.event_name == 'pull_request' && github.repository == 'Homebrew/homebrew-core'
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     needs: tap_syntax
     outputs:
@@ -186,11 +183,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - runner: '12-arm64'
-          - runner: '12-${{github.run_id}}-${{github.run_attempt}}'
-          - runner: '11-arm64'
-          - runner: '11-${{github.run_id}}-${{github.run_attempt}}'
-          - runner: '10.15-${{github.run_id}}-${{github.run_attempt}}'
+          - runner: 'macos-12'
+          # - runner: '12-${{github.run_id}}-${{github.run_attempt}}'
+          - runner: 'macos-11'
+          # - runner: '11-${{github.run_id}}-${{github.run_attempt}}'
+          # - runner: '10.15-${{github.run_id}}-${{github.run_attempt}}'
           - runner: ${{needs.setup_tests.outputs.linux-runner}}
             container:
               image: ghcr.io/homebrew/ubuntu16.04:master
@@ -270,53 +267,9 @@ jobs:
           step_name: 'Dependent summary on ${{ matrix.runner }}'
           collapse: 'true'
 
-      - name: Upload logs
+      - name: Upload and Cleanup Bottle Result
         if: always()
-        uses: actions/upload-artifact@main
+        uses: mohzulfikar/actions-homebrew/upload-and-cleanup-bottle-result@upload-and-cleanup-bottle-result
         with:
-          name: logs-${{ matrix.runner }}
-          path: ${{matrix.workdir || github.workspace}}/bottles/logs
-
-      - name: Delete logs and home
-        if: always()
-        run: |
-          rm -rvf bottles/logs
-          rm -rvf bottles/home
-
-      - name: Count bottles
-        id: bottles
-        if: always()
-        run: |
-          cd bottles
-          count=$(ls *.json | wc -l | xargs echo -n)
-          echo "$count bottles"
-          echo "::set-output name=count::$count"
-          failures=$(ls failed/*.json | wc -l | xargs echo -n)
-          echo "$failures failed bottles"
-          echo "::set-output name=failures::$failures"
-
-      - name: Upload failed bottles
-        if: always() && steps.bottles.outputs.failures > 0
-        uses: actions/upload-artifact@main
-        with:
-          name: bottles-${{ matrix.runner }}
-          path: ${{matrix.workdir || github.workspace}}/bottles/failed
-
-      # Must be run before the `Upload bottles` step so that failed
-      # bottles are not included in the `bottles` artifact.
-      - name: Delete failed bottles
-        if: always()
-        run: rm -rvf bottles/failed
-
-      - name: Upload bottles
-        if: always() && steps.bottles.outputs.count > 0
-        uses: actions/upload-artifact@main
-        with:
-          name: bottles
-          path: ${{matrix.workdir || github.workspace}}/bottles
-
-      - name: Post cleanup
-        if: always()
-        run: |
-          brew test-bot --only-cleanup-after
-          rm -rvf bottles
+          workdir: ${{ matrix.workdir || github.workspace }}
+          include-failed-bottles: 1
