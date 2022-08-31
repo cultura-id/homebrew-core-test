@@ -272,3 +272,4 @@ jobs:
         uses: mohzulfikar/actions-homebrew/upload-and-cleanup-bottle-result@upload-and-cleanup-bottle-result
         with:
           workdir: ${{ matrix.workdir || github.workspace }}
+          include-failed-bottles: 1
